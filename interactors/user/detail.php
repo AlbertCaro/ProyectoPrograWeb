@@ -9,12 +9,9 @@
 require_once "../../conf.php";
 session_start();
 
-$sql = "SELECT * FROM artistas WHERE idartistas = {$_POST['id']}";
+$sql = "SELECT * FROM usuarios WHERE idusuarios = {$_POST['id']}";
 $res = $conn -> query($sql);
 $row = ($res -> fetchAll())[0];
-
-if ($row['retiro'] === null)
-    $row['retiro'] = "No se ha retirado.";
 
 echo "
 <td colspan='4'>
@@ -23,31 +20,32 @@ echo "
 		<div class=\"row\">
 			<div class=\"6u 12u$(xsmall)\">
 				<div class='12u$'>
-					<span><strong>Nombre:</strong> {$row['nombre']}</span>
+					<span><strong>Usuario:</strong> {$row['usuario']}</span>
 				</div>
 				<div class='12u$'>
-					<span><strong>Pais:</strong> {$row['pais']}</span>
+					<span><strong>Rol: </strong>"; if ($row['rol'] === "admin") echo "Administrador"; else echo "Normal"; echo"</span>
 				</div>
-				<div class='12u$'>
-					<span><strong>Debut:</strong> {$row['debut']}</span>
-				</div>
-				<div class='12u$'>
-					<span><strong>Retiro:</strong> {$row['retiro']}</span>
-				</div>
+				
 			</div>
 			<div class=\"6u$ 12u$(xsmall)\">
 				<div class='12u$'>
-					<span><strong>Descripción:</strong> ".$row['descripcion']."</span>
+					<span><strong>Nombre(s):</strong> {$row['nombre']}</span>
 				</div>
-				</div><br/>
+				<div class='12u$'>
+					<span><strong>Apellido paterno:</strong> {$row['apaterno']}</span>
+				</div>
+				<div class='12u$'>
+					<span><strong>Apellido materno:</strong> {$row['amaterno']}</span>
+				</div>
+			</div><br/>
 			</div>
 		</div><br/>";
 
 if ($_SESSION['role'] == "admin") {
     echo "
 		<div align='right'>
-            <a class='btn btn-default' href='../artist/{$row['idartistas']}'>Editar</a>
-            <a class='btn btn-danger' onclick='confirmDelete(\"{$row['nombre']}\",\"{$row['idartistas']}\")'>Eliminar</a>
+            <a class='btn btn-default' href='../user/{$row['idusuarios']}'>Editar</a>
+            <a class='btn btn-danger' onclick='confirmDelete(\"{$row['nombre']}\",\"{$row['idusuarios']}\")'>Eliminar</a>
 		</div>";
 }
 

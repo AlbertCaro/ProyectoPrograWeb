@@ -28,38 +28,43 @@ include_once "../elements/navbar.php";
             <form method="post" id="form">
                 <div class="row uniform 50%">
                     <?php
-                    if ($_GET['id'] !== "") {
+                    if ($_GET['id'] === "") {
                         echo "
                         <div class=\"6u 12u$(xsmall)\">
-                            <input type=\"text\" name=\"user\" id=\"user\" value=\"{$rows['usuario']}\"
-                                   placeholder=\"Apellido paterno\" required/>
+                            <label for='user'>Usuario:</label>
+                            <input type=\"text\" name=\"user\" id=\"user\" placeholder=\"Usuario\" required/>
                         </div>";
                     }
 
                     ?>
-                    <div class="12u 12u$(xsmall)">
+                    <div class="<?php if ($_GET['id'] === "") echo "6u"; else echo "12u";?> 12u$(xsmall)">
+                        <label for='nombre'>Nombre:</label>
                         <input type="text" name="nombre" id="nombre" value="<?php if ($_GET['id'] !== "") echo $rows['nombre'] ?>"
                                placeholder="Nombre(s)" required/>
-                        <?php if($_GET['id'] !== "") echo "<input type='hidden' name='id' id='id' value='{$rows['idusuario']}'>" ?>
+                        <?php if($_GET['id'] !== "") echo "<input type='hidden' name='id' id='id' value='{$rows['idusuarios']}'>" ?>
                     </div>
                     <div class="6u 12u$(xsmall)">
+                        <label for='apaterno'>Apellido paterno:</label>
                         <input type="text" name="apaterno" id="apaterno" value="<?php if ($_GET['id'] !== "") echo $rows['apaterno'] ?>"
                                placeholder="Apellido paterno" required/>
                     </div>
                     <div class="6u$ 12u$(xsmall)">
+                        <label for='amaterno'>Apellido materno:</label>
                         <input type="text" name="amaterno" id="amaterno" value="<?php if ($_GET['id'] !== "") echo $rows['amaterno'] ?>"
                                placeholder="Apellido materno"/>
                     </div>
                     <div class="6u 12u$(xsmall)">
-                        <input type="text" name="pass" id="pass" placeholder="Contraseña" <?php if ($_GET['id'] === "") echo 'required' ?> />
+                        <label for='pass'>Contraseña:</label>
+                        <input type="password" name="pass" id="pass" placeholder="Contraseña" <?php if ($_GET['id'] === "") echo 'required' ?> />
                     </div>
                     <div class="6u$ 12u$(xsmall)">
-                        <input type="text" name="pass_conf" id="pass_conf" placeholder="Confirmar contraseña" <?php if ($_GET['id'] === "") echo 'required' ?> />
+                        <label for='pass_conf'>Confirmar contraseña:</label>
+                        <input type="password" name="pass_conf" id="pass_conf" placeholder="Confirmar contraseña" <?php if ($_GET['id'] === "") echo 'required' ?> />
                     </div>
-                    <div id="response">
+                    <div id="response" class="12u$">
 
                     </div>
-                    <div class="12u$">
+                    <div class="12u$" align="center">
                         <ul class="actions">
                             <li><input type="submit" value="Guardar" class="special" onclick=""/></li>
                         </ul>
@@ -72,6 +77,9 @@ include_once "../elements/navbar.php";
 <script type="text/javascript">
     $("#form").validate({
         rules: {
+            user: {
+                minlength: 5
+            },
             pass: {
                 minlength: 5
             }, pass_conf: {
@@ -79,6 +87,10 @@ include_once "../elements/navbar.php";
             }
         },
         messages: {
+            user: {
+                required: "El usuario no puede quedar vacío",
+                minlength: "El usuario debe contar con mínimo 5 carácteres"
+            },
             nombre: "Debe especificar el nombre del usuario",
             apaterno: "Debe especificar su apellido paterno",
             pass: {
@@ -86,13 +98,18 @@ include_once "../elements/navbar.php";
                 <?php if ($_GET['id'] === "") echo ', required: "Debe especificar la contraseña"' ?>
             },
             pass_conf: {
-                minlength: "La contraseña debe tener mínimo 5 carácteres"
-                <?php if ($_GET['id'] === "") echo ', required: "Debe confirmar la contraseña",' ?>
+                minlength: "La contraseña debe tener mínimo 5 carácteres",
+                <?php if ($_GET['id'] === "") echo ' required: "Debe confirmar la contraseña",' ?>
                 equalsTo: "Las contraseñas no coinciden"
             }
         }, submitHandler: function () {
             sendData({
-                <?php if ($_GET['id'] !== '') echo '"id" : $(\'#id\').val(),'?>
+                <?php
+                if ($_GET['id'] !== '')
+                    echo '"id" : $("#id").val(),';
+                else
+                    echo '"user" : $("#user").val(),';
+                ?>
                 "nombre" : $('#nombre').val(),
                 "apaterno" : $('#apaterno').val(),
                 "amaterno" : $('#amaterno').val(),

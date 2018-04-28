@@ -7,7 +7,8 @@
  */
 require_once "../../conf.php";
 
-$sql = "SELECT * FROM artistas WHERE nombre LIKE '%{$_POST['search']}%' OR pais LIKE '%{$_POST['search']}%' OR debut LIKE '%{$_POST['search']}%'";
+$sql = "SELECT idusuarios, usuario, CONCAT(nombre, ' ', apaterno, ' ', amaterno) as nombreCompleto FROM
+usuarios WHERE usuario LIKE '%{$_POST['search']}%' OR CONCAT(nombre, ' ', apaterno, ' ', amaterno) LIKE '%{$_POST['search']}%'";
 $res = $conn -> query($sql);
 $count = $res -> rowCount();
 
@@ -19,15 +20,14 @@ if ($count != 0) {
         echo "
         <tr>
             <td>
-                <a href='#' id='detail_button_{$row['idartistas']}' onclick='showDetail(\"{$row['idartistas']}\", \"#detail_{$row['idartistas']}\", event)'>
-                    <img id='image_{$row['idartistas']}' src='../images/more.png' width='15px'>
+                <a href='#' id='detail_button_{$row['idusuarios']}' onclick='showDetail(\"{$row['idusuarios']}\", \"#detail_{$row['idusuarios']}\", event)'>
+                    <img id='image_{$row['idusuarios']}' src='../images/more.png' width='15px'>
                 </a>
             </td>
-            <td>{$row['nombre']}</td>
-            <td>{$row['pais']}</td>
-            <td>{$row['debut']}</td>
+            <td>{$row['usuario']}</td>
+            <td>{$row['nombreCompleto']}</td>
         </tr>
-        <tr id='detail_{$row['idartistas']}'>
+        <tr id='detail_{$row['idusuarios']}'>
         </tr>";
     }
 } else {

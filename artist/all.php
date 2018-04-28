@@ -28,7 +28,7 @@ include_once "../elements/navbar.php";
                     <th>Año de debut</th>
                 </tr>
             </thead>
-            <tbody id="response">
+            <tbody id="response" class="12u$">
 
             </tbody>
         </table>

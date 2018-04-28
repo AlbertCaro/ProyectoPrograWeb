@@ -1353,10 +1353,18 @@ idusuarios</ColNames>
       <DataType>varchar(45)|0</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <key id="321" parent="257" name="PRIMARY">
+    <index id="321" parent="257" name="usuarios_usuario_uindex">
+      <ColNames>usuario</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <key id="322" parent="257" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>idusuarios</ColNames>
       <Primary>1</Primary>
+    </key>
+    <key id="323" parent="257" name="usuarios_usuario_uindex">
+      <ColNames>usuario</ColNames>
+      <UnderlyingIndexName>usuarios_usuario_uindex</UnderlyingIndexName>
     </key>
   </database-model>
 </dataSource>

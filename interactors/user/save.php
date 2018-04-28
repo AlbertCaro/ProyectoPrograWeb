@@ -8,14 +8,23 @@
 
 require_once "../../conf.php";
 
-$sql = "INSERT INTO artistas (nombre, descripcion, pais, debut, retiro) VALUES
- ('{$_POST['nombre']}', '{$_POST['descripcion']}', '{$_POST['pais']}', '{$_POST['debut']}', '{$_POST['retiro']}')";
+$sql = "SELECT * FROM usuarios WHERE usuario = '{$_POST['user']}'";
+$res = $conn -> query($sql);
 
-if ($conn -> exec($sql)) {
-    sweetMessage('Guardado correctamente',
-        'Se ha guardado el artista con éxito.',
-        'success',
-        'all');
-} else {
-    message('No se ha podido guardar el artista.', 'alert alert-danger');
-}
+if (!$res -> rowCount()) {
+    if ($_POST['pass'] === $_POST['pass_conf']) {
+        $sql = "INSERT INTO usuarios (usuario, pass, nombre, apaterno, amaterno, rol) VALUES
+ ('{$_POST['user']}', '{$_POST['pass']}', '{$_POST['nombre']}', '{$_POST['apaterno']}', '{$_POST['apaterno']}', 'normal')";
+
+        if ($conn -> exec($sql)) {
+            sweetMessage('Guardado correctamente',
+                'Se ha guardado el usuario con éxito.',
+                'success',
+                'all');
+        } else {
+            message('No se ha podido guardar el usuario.', 'alert alert-danger');
+        }
+    } else
+        message('Las contraseñas no coinciden.', 'alert alert-danger');
+} else
+    message('El nombre de usuario ingresado ya existe.', 'alert alert-danger');

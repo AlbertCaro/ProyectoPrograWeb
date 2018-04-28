@@ -98,7 +98,7 @@ include_once "elements/navbar.php";
             </div>
         </article>
     </div>
-    <div id="response"></div>
+    <div id="response" class="12u$"></div>
 </section>
 
 <?php include_once "elements/footer.php" ?>

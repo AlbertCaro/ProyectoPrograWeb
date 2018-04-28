@@ -23,9 +23,8 @@ include_once "../elements/navbar.php";
             <thead>
                 <tr>
                     <th></th>
-                    <th>Nombre</th>
-                    <th>País</th>
-                    <th>Año de debut</th>
+                    <th>Usuario</th>
+                    <th>Nombre completo</th>
                 </tr>
             </thead>
             <tbody id="response">
@@ -52,9 +51,9 @@ include_once "../elements/navbar.php";
             if (result.value) {
                 sendDataDelete({
                     "id" : id
-                }, '../interactors/artist/delete.php',
-                'Artista eliminado correctamente.',
-                'No se ha podido eliminar el artista correctamente.')
+                }, '../interactors/user/delete.php',
+                'Usuario eliminado correctamente.',
+                'No se ha podido eliminar el usuario correctamente.')
         }
     });
     }
@@ -63,7 +62,7 @@ include_once "../elements/navbar.php";
         event.preventDefault();
         sendDataDiv({
             id : id
-        }, '../interactors/artist/detail.php',
+        }, '../interactors/user/detail.php',
         field);
         document.getElementById("detail_button_"+id)
             .setAttribute('onclick', 'hideDetail("'+id+'","#detail_'+id+'", event)');
@@ -83,7 +82,7 @@ include_once "../elements/navbar.php";
     function generateTable(){
         sendData({
             "search" : $('#search').val()
-        }, '../interactors/artist/table.php');
+        }, '../interactors/user/table.php');
     }
 </script>
 <?php include_once "../elements/footer.php" ?>

@@ -8,5 +8,5 @@
 
 require_once "../../conf.php";
 
-$sql = "DELETE FROM artistas WHERE idartistas = {$_POST['id']}";
+$sql = "DELETE FROM usuarios WHERE idusuarios = {$_POST['id']}";
 echo $conn -> exec($sql);
