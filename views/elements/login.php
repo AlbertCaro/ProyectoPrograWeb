@@ -31,15 +31,13 @@ include_once "navbar.php";
                 <header>
                     <h3>Inicia sesión</h3>
                 </header>
-                <form>
+                <form id="form">
                     <div class="row uniform 50%">
                         <div class="12u$">
-                            <input type="text" name="user" id="user" placeholder="Ingresa tu usuario, código o email"
-                                   onkeyup="focusField('user')" required/>
+                            <input type="text" name="user" id="user" placeholder="Ingresa tu usuario, código o email" required/>
                         </div>
                         <div class="12u$">
-                            <input type="password" name="pass" id="pass" placeholder="Contraseña"
-                                   onkeyup="focusField('pass')" required/>
+                            <input type="password" name="pass" id="pass" placeholder="Contraseña" required/>
                             <p style="font-size: 14px"><a href="">Olvidé la contraseña.</a></p>
                         </div>
                         <div id="response" class="12u$">
@@ -47,7 +45,7 @@ include_once "navbar.php";
                         </div>
                         <div class="12u$">
                             <ul class="actions">
-                                <li><input type="submit" value="Iniciar sesión" class="special" onclick="login(event);"/></li>
+                                <li><input type="submit" value="Iniciar sesión" class="special"/></li>
                             </ul>
                         </div>
                     </div>
@@ -56,30 +54,20 @@ include_once "navbar.php";
         </article>
     </div>
 </section>
-
 <script type="text/javascript">
-    // Example starter JavaScript for disabling form submissions if there are invalid fields
-    (function() {
-        'use strict';
-
-        window.addEventListener('load', function() {
-            var form = document.getElementById('needs-validation');
-            form.addEventListener('submit', function(event) {
-                if (form.checkValidity() === false) {
-                    event.preventDefault();
-                    event.stopPropagation();
-                }
-                form.classList.add('was-validated');
-            }, false);
-        }, false);
-    })();
-
-    function login(event) {
-        event.preventDefault();
-        sendData({
-            "user" : $("#user").val(),
-            "pass" : $("#pass").val()
-        }, 'interactors/session/signin.php');
-    }
+    $("#form").validate({
+        messages: {
+            user: "El usuario no puede quedar vacío",
+            pass: "La contraseña no puede quedar vacía"
+        }, submitHandler: function () {
+            sendData({
+                "user" : $("#user").val(),
+                "pass" : $("#pass").val(),
+                "func" : "signin"
+            }, 'controller/');
+        }, invalidHandler: function () {
+            emptyForm()
+        }
+    })
 </script>
 <?php include_once "footer.php" ?>

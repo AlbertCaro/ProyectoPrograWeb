@@ -1,6 +1,6 @@
 <?php
 
-require_once "../../interactors/conf.php";
+require_once "../../controllers/conf.php";
 
 $title = "Agregar artista";
 
@@ -91,6 +91,8 @@ include_once "../elements/navbar.php";
                     echo "../interactors/artist/update.php";
                 else
                     echo "../interactors/artist/save.php"?>');
+        }, invalidHandler: function () {
+            emptyForm()
         }
     });
 </script>

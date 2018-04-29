@@ -1,6 +1,6 @@
 <?php
 
-require_once "../../interactors/conf.php";
+require_once "../../controllers/conf.php";
 
 $title = "Agregar usuario";
 
@@ -114,12 +114,11 @@ include_once "../elements/navbar.php";
                 "apaterno" : $('#apaterno').val(),
                 "amaterno" : $('#amaterno').val(),
                 "pass" : $('#pass').val(),
-                "pass_conf" : $('#pass_conf').val()
-            }, '<?php
-                if ($_GET['id'] !== "")
-                    echo "../interactors/user/update.php";
-                else
-                    echo "../interactors/user/save.php"?>');
+                "pass_conf" : $('#pass_conf').val(),
+                "func" : '<?php if ($_GET['id'] !== "") echo "update"; else echo "save"?>'
+            }, 'controller/');
+        }, invalidHandler: function () {
+            emptyForm()
         }
     });
 </script>

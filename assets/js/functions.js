@@ -29,39 +29,44 @@ function sendDataDiv(data, url, div) {
     });
 }
 
-function sendDataDelete(data, message, error, interactor) {
+function sendDataDelete(id, message, error) {
     $.ajax({
-        data: data,
+        data: {
+            "id" : id,
+            "func" : "delete"
+        },
         type: 'post',
-        url: '../interactors/'+interactor+'/delete.php',
+        url: 'controller/',
         success: function (response) {
             if (response === '1') {
                 swal('Eliminado', message, 'success').then(function (value) {
-                    generateTable(interactor);
+                    $('row_'+id).remove();
                 });
             } else {
                 swal('Error', error, 'error').then(function (value) {
-                    generateTable(interactor);
+                    $('row_'+id).remove();
                 });
             }
         }
     });
 }
 
-function generateTable(interactor) {
+function generateTable() {
     sendData({
-        "search" : $('#search').val()
-    }, '../interactors/'+interactor+'/table.php');
+        "search" : $('#search').val(),
+        "func" : "table"
+    }, 'controller/');
 }
 
-function showDetail(id, field, event, interactor) {
+function showDetail(id, field, event) {
     event.preventDefault();
     sendDataDiv({
-            id : id
-        }, '../interactors/'+interactor+'/detail.php',
+            "id" : id,
+            "func" : "detail"
+        }, 'controller/',
         field);
     document.getElementById("detail_button_"+id)
-        .setAttribute('onclick', 'hideDetail("'+id+'","#detail_'+id+'", event, "'+interactor+'")');
+        .setAttribute('onclick', 'hideDetail("'+id+'","#detail_'+id+'", event)');
     document.getElementById("image_"+id)
         .setAttribute('src', '../assets/img/minus.png');
 }
@@ -70,7 +75,7 @@ function hideDetail(id, field, event, interactor) {
     event.preventDefault();
     $(field).html("");
     document.getElementById("detail_button_"+id)
-        .setAttribute('onclick', 'showDetail("'+id+'", "#detail_'+id+'", event, "'+interactor+'")');
+        .setAttribute('onclick', 'showDetail("'+id+'", "#detail_'+id+'", event)');
     document.getElementById("image_"+id)
         .setAttribute('src', '../assets/img/more.png');
 }
@@ -87,11 +92,26 @@ function confirmDelete(name, id, object, interactor) {
     }).then(function (result) {
         console.log(result.value);
         if (result.value) {
-            sendDataDelete({
-                    "id": id
-                }, object.charAt(0).toUpperCase() + object.slice(1)+' eliminado correctamente.',
+            sendDataDelete(id, object.charAt(0).toUpperCase() + object.slice(1)+' eliminado correctamente.',
                 'No se ha podido eliminar el '+object+' correctamente.',
                 interactor)
         }
     });
+}
+
+function login(event) {
+    event.preventDefault();
+    sendData({
+        "user" : $("#user").val(),
+        "pass" : $("#pass").val(),
+        "func" : "signin"
+    }, 'controller/');
+}
+
+function emptyForm() {
+    $("#response").html('' +
+        '<div id="message" class="alert alert-danger">\n' +
+        '<a href="#" onclick="fadeMessage()" class="close" title="close">×</a>\n' +
+        '<span>Ha dejado campos vacíos</span>\n' +
+        '</div>');
 }

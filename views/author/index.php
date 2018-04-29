@@ -91,6 +91,8 @@ include_once "../elements/navbar.php";
                     echo "../interactors/artist/update.php";
                 else
                     echo "../interactors/artist/save.php"?>');
+        }, invalidHandler: function () {
+            emptyForm()
         }
     });
 </script>

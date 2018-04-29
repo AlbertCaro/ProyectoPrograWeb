@@ -1,6 +1,6 @@
 <?php
 
-require_once "../../interactors/conf.php";
+require_once "../../controllers/conf.php";
 
 $title = "Agregar artista";
 
@@ -92,14 +92,13 @@ include_once "../elements/navbar.php";
                 "pais" : $('#pais').val(),
                 "debut" : $('#debut').val(),
                 "retiro" : $('#retiro').val(),
-                "descripcion" : $('#descripcion').val()
-            }, '<?php
-                if ($_GET['id'] !== "")
-                    echo "../interactors/artist/update.php";
-                else
-                    echo "../interactors/artist/save.php"?>');
-        }
-    });
-</script>
-<?php include_once "../elements/footer.php"; ?>
+                "descripcion" : $('#descripcion').val(),
+                "func" : '<?php if ($_GET['id'] !== "") echo "update"; else echo "save"?>'
+                }, 'controller/');
+            }, invalidHandler: function () {
+                emptyForm()
+            }
+        });
+    </script>
+    <?php include_once "../elements/footer.php"; ?>
 

@@ -9,22 +9,18 @@
 <!-- Footer -->
 <section id="footer">
     <div class="inner" align="center">
+        <div id="sessionResponse"></div>
         <header class="major">
-            <h3>Centro Universitario de los Valles</h3>
-            <span>Universidad de Guadalajara</span>
+            <h3>International Music database</h3>
+            <span>Powered by Dynamite Enterprise</span>
             <br><br>
         </header>
         <div class="copyright">
-            &copy; Untitled Design: <a href="https://templated.co/">TEMPLATED</a>. Images <a href="https://unsplash.com/">Unsplash</a>
-        </div>
-        <div id="sessionResponse">
-
+            &copy; <?php echo date('Y') ?> Alberto Caro Navarro. Template by: <a href="https://templated.co/">TEMPLATED</a>.
         </div>
     </div>
-    <br/><br/><br/><br/><br/><br/><br/>
 </section>
-
-<!-- Scripts -->}
+<!-- Scripts -->
 <script src="<?php echo $dots ?>assets/js/skel.min.js"></script>
 <script src="<?php echo $dots ?>assets/js/util.js"></script>
 <script src="<?php echo $dots ?>assets/js/main.js"></script>
@@ -32,8 +28,9 @@
     function logout(event) {
         event.preventDefault();
         sendDataDiv({
-            'count' : <?php echo count($array) ?>
-        }, '<?php if (isset($_SESSION['valid'])) echo $dots ?>interactors/session/logout.php',
+            'count' : <?php echo count($array) ?>,
+            'func' : 'logout'
+        }, '<?php if (isset($_SESSION['valid'])) echo $dots ?>login/controller/',
         "#sessionResponse");
     }
 </script>

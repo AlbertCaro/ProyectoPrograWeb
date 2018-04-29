@@ -1,14 +1,14 @@
 # Do not remove this line or mod_rewrite rules and search engine friendly URLs will stop working
 RewriteEngine On
 
-RewriteEngine on
+# Se usa esta función para poder acceder a los archivos .php sin necesidad de la extensión
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME}\.php -f
-RewriteRule ^(.*)$ $1.php 
+RewriteRule ^(.*)$ $1.php
 
-RewriteRule ^index(\d+)*$ views/elements/index.php
+RewriteRule ^index/(\d+)*$ views/elements/index.php
 RewriteRule ^(\d+)*$ views/elements/index.php
-RewriteRule ^login(\d+)*$ views/elements/login.php
+RewriteRule ^login/(\d+)*$ views/elements/login.php
 RewriteRule ^album/(\d+)*$ views/album/index.php?id=$1
 RewriteRule ^artist/(\d+)*$ views/artist/index.php?id=$1
 RewriteRule ^author/(\d+)*$ views/author/index.php?id=$1
@@ -16,6 +16,7 @@ RewriteRule ^song/(\d+)*$ views/song/index.php?id=$1
 RewriteRule ^label/(\d+)*$ views/label/index.php?id=$1
 RewriteRule ^genre/(\d+)*$ views/genre/index.php?id=$1
 RewriteRule ^user/(\d+)*$ views/user/index.php?id=$1
+RewriteRule ^favorites/(\d+)*$ views/song/favorites.php?id=$1
 
 RewriteRule ^album/all(\d+)*$ views/album/all.php
 RewriteRule ^artist/all(\d+)*$ views/artist/all.php
@@ -24,3 +25,13 @@ RewriteRule ^song/all(\d+)*$ views/song/all.php
 RewriteRule ^label/all(\d+)*$ views/label/all.php
 RewriteRule ^genre/all(\d+)*$ views/genre/all.php
 RewriteRule ^user/all(\d+)*$ views/user/all.php
+
+RewriteRule ^album/controller/(\d+)*$ controllers/AlbumController.php
+RewriteRule ^artist/controller/(\d+)*$ controllers/ArtistController.php
+RewriteRule ^author/controller/(\d+)*$ controllers/AuthorController.php
+RewriteRule ^song/controller/(\d+)*$ controllers/SongController.php
+RewriteRule ^label/controller/(\d+)*$ controllers/LabelController.php
+RewriteRule ^genre/controller/(\d+)*$ controllers/GenreController.php
+RewriteRule ^user/controller/(\d+)*$ controllers/UserController.php
+RewriteRule ^favorite/controller/(\d+)*$ controllers/FavoriteController.php
+RewriteRule ^login/controller/(\d+)*$ controllers/SessionController.php

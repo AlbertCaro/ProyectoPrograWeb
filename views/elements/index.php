@@ -1,6 +1,6 @@
 <?php
 
-require_once "../../interactors/conf.php";
+require_once "../../controllers/conf.php";
 session_start();
 
 $title = "Inicio";
@@ -12,7 +12,14 @@ include_once "navbar.php";
         <h1>Musical: <span>la base de datos de<br />
 					consulta de música más grande.</span></h1>
         <ul class="actions">
-            <li><a href="#" class="button alt">Get Started</a></li>
+            <li>
+            <?php
+            if (isset($_SESSION['valid']))
+                echo "<a href='song/all/' class='button alt'>Ver canciones</a>";
+            else
+                echo "<a href='login' class='button alt'>Iniciar sesión</a>"
+            ?>
+            </li>
         </ul>
     </div>
 </section>
@@ -21,11 +28,11 @@ include_once "navbar.php";
 <section id="one">
     <div class="inner">
         <header>
-            <h2>Magna Etiam Lorem</h2>
+            <h2>Lista de canciones favoritas</h2>
         </header>
-        <p>Suspendisse mauris. Fusce accumsan mollis eros. Pellentesque a diam sit amet mi ullamcorper vehicula. Integer adipiscin sem. Nullam quis massa sit amet nibh viverra malesuada. Nunc sem lacus, accumsan quis, faucibus non, congue vel, arcu, erisque hendrerit tellus. Integer sagittis. Vivamus a mauris eget arcu gravida tristique. Nunc iaculis mi in ante.</p>
+        <p>Registra tus canciones favoritas en el éste sistema, no pierdas la información que te interesa.</p>
         <ul class="actions">
-            <li><a href="#" class="button alt">Learn More</a></li>
+            <li><a href="favorites" class="button alt">Ir a canciones favoritas</a></li>
         </ul>
     </div>
 </section>

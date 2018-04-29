@@ -14,7 +14,7 @@ include_once "../elements/navbar.php";
             <form>
                 <div class="12u 12u$(xsmall)">
                     <label for="search">Buscar: </label>
-                    <input type="text" id="search" name="search" onkeyup="generateTable('user')">
+                    <input type="text" id="search" name="search" onkeyup="generateTable('user', 'table')">
                 </div>
             </form>
         </header>
@@ -34,6 +34,6 @@ include_once "../elements/navbar.php";
 </section>
 
 <script type="text/javascript">
-    $(document).ready(generateTable('user'));
+    $(document).ready(generateTable('user', 'table'));
 </script>
 <?php include_once "../elements/footer.php" ?>

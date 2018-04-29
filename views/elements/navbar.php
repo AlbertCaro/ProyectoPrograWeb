@@ -24,10 +24,10 @@ if (count($array) > 3)
     <title><?php echo $title ?> - Musical</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-    <link rel="stylesheet" href="<?php echo $dots ?>assets/css/main.css" />
     <link href="<?php echo $dots ?>assets/css/bootstrap.min.css" rel="stylesheet">
     <link href="<?php echo $dots ?>assets/css/jquery-ui.min.css">
     <link href="<?php echo $dots ?>assets/css/datetimepicker.css">
+    <link rel="stylesheet" href="<?php echo $dots ?>assets/css/main.css" />
     <script type="text/javascript" language="JavaScript" src="<?php echo $dots ?>assets/js/functions.js"></script>
     <script src="<?php echo $dots ?>assets/js/node_modules/sweetalert2/dist/sweetalert2.all.js"></script>
     <script src="<?php echo $dots ?>assets/js/jquery.js"></script>
@@ -52,22 +52,12 @@ if (count($array) > 3)
         <nav id="nav">
             <?php
             if(isset($_SESSION['valid'])) {
-                if ($_SESSION['role'] === "admin") {
-                    echo '
-                    <div class="dropdown inline-div">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Usuarios<span class="caret"></span></a>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" style="color:#000;" href="'.$dots.'user">Agregar</a></li>
-                            <li><a class="dropdown-item" style="color:#000;" href="'.$dots.'user/all">Ver todos</a></li>
-                        </ul>
-                    </div>';
-                }
                 echo '
                     <div class="dropdown inline-div">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Artistas<span class="caret"></span></a>
                         <ul class="dropdown-menu">';
                 if ($_SESSION['role'] === 'admin')
-                    echo '<li><a class="dropdown-item" style="color:#000;" href="'.$dots.'artist">Agregar</a></li>';
+                    echo '<li><a class="dropdown-item" style="color:#000;" href="'.$dots.'artist/">Agregar</a></li>';
                 echo '
                             <li><a class="dropdown-item" style="color:#000;" href="'.$dots.'artist/all">Ver todos</a></li>
                          </ul>
@@ -75,9 +65,9 @@ if (count($array) > 3)
                     <div class="dropdown inline-div">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Canciones<span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" style="color:#000;" href="'.$dots.'favorites">Favoritas</a></li>';
+                            <li><a class="dropdown-item" style="color:#000;" href="'.$dots.'favorites/">Favoritas</a></li>';
                 if ($_SESSION['role'] === 'admin')
-                    echo '<li><a class="dropdown-item" style="color:#000;" href="'.$dots.'song">Agregar</a></li>';
+                    echo '<li><a class="dropdown-item" style="color:#000;" href="'.$dots.'song/">Agregar</a></li>';
                 echo '
                             <li><a class="dropdown-item" style="color:#000;" href="'.$dots.'song/all">Ver todos</a></li>
                         </ul>
@@ -109,11 +99,22 @@ if (count($array) > 3)
                             <li><a class="dropdown-item" style="color:#000;" href="#">Ver todos</a></li>
                         </ul>
                     </div>';
+
+                if ($_SESSION['role'] === "admin") {
+                    echo '
+                    <div class="dropdown inline-div">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Usuarios<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" style="color:#000;" href="'.$dots.'user/">Agregar</a></li>
+                            <li><a class="dropdown-item" style="color:#000;" href="'.$dots.'user/all">Ver todos</a></li>
+                        </ul>
+                    </div>';
+                }
             }
             if (isset($_SESSION['valid']))
                 echo "<a href='#' onclick='logout(event)'>Salir</a>";
             else
-                echo "<a href='{$dots}login'>Iniciar sesión</a>";
+                echo "<a href='{$dots}login/'>Iniciar sesión</a>";
             ?>
         </nav>
     </div>
