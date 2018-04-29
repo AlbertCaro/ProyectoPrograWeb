@@ -29,7 +29,7 @@ if (count($array) > 3)
     <link href="<?php echo $dots ?>assets/css/jquery-ui.min.css">
     <link href="<?php echo $dots ?>assets/css/datetimepicker.css">
     <script type="text/javascript" language="JavaScript" src="<?php echo $dots ?>assets/js/functions.js"></script>
-    <script src="<?php echo $dots ?>node_modules/sweetalert2/dist/sweetalert2.all.js"></script>
+    <script src="<?php echo $dots ?>assets/js/node_modules/sweetalert2/dist/sweetalert2.all.js"></script>
     <script src="<?php echo $dots ?>assets/js/jquery.js"></script>
     <script src="<?php echo $dots ?>assets/js/jquery.min.js"></script>
     <script src="<?php echo $dots ?>assets/js/jquery-ui.min.js"></script>
@@ -37,9 +37,9 @@ if (count($array) > 3)
     <script src="<?php echo $dots ?>assets/js/year-select.js"></script>
     <script src="<?php echo $dots ?>assets/js/calendar.js"></script>
     <script src="<?php echo $dots ?>assets/js/datetimepicker.full.js"></script>
-    <script src="<?php echo $dots ?>node_modules/jquery-validation/dist/jquery.validate.js"></script>
-    <script src="<?php echo $dots ?>node_modules/jquery-validation/dist/jquery.validate.min.js"></script>
-    <script src="<?php echo $dots ?>node_modules/jquery-validation/dist/additional-methods.js"></script>
+    <script src="<?php echo $dots ?>assets/js/node_modules/jquery-validation/dist/jquery.validate.js"></script>
+    <script src="<?php echo $dots ?>assets/js/node_modules/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="<?php echo $dots ?>assets/js/node_modules/jquery-validation/dist/additional-methods.js"></script>
     <script src="<?php echo $dots ?>assets/js/countrypicker.js"></script>
     <script src="<?php echo $dots ?>assets/js/countrypicker.min.js"></script>
 </head>
@@ -48,7 +48,7 @@ if (count($array) > 3)
 <!-- Header -->
 <header id="header">
     <div class="inner">
-        <a href="<?php echo $dots ?>index" class="logo">Musical</a>
+        <a href="<?php echo $dots ?>" class="logo">Musical</a>
         <nav id="nav">
             <?php
             if(isset($_SESSION['valid'])) {
@@ -79,7 +79,7 @@ if (count($array) > 3)
                 if ($_SESSION['role'] === 'admin')
                     echo '<li><a class="dropdown-item" style="color:#000;" href="'.$dots.'song">Agregar</a></li>';
                 echo '
-                            <li><a class="dropdown-item" style="color:#000;" href="../song/all">Ver todos</a></li>
+                            <li><a class="dropdown-item" style="color:#000;" href="'.$dots.'song/all">Ver todos</a></li>
                         </ul>
                     </div>
                     <div class="dropdown inline-div">

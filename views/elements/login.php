@@ -5,7 +5,7 @@ if (isset($_SESSION['valid']))
     header("Location:index");
 
 $title = "Iniciar sesión";
-include_once "elements/navbar.php";
+include_once "navbar.php";
 ?>
 
 <!-- Main -->
@@ -82,4 +82,4 @@ include_once "elements/navbar.php";
         }, 'interactors/session/signin.php');
     }
 </script>
-<?php include_once "elements/footer.php" ?>
+<?php include_once "footer.php" ?>

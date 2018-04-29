@@ -6,7 +6,7 @@
  * Time: 09:31 AM
  */
 
-require_once "../../conf.php";
+require_once "../conf.php";
 
 $sql = "DELETE FROM usuarios WHERE idusuarios = {$_POST['id']}";
 echo $conn -> exec($sql);

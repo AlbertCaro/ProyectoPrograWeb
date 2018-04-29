@@ -6,10 +6,21 @@ RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME}\.php -f
 RewriteRule ^(.*)$ $1.php 
 
-RewriteRule ^album/(\d+)*$ album/index.php?id=$1
-RewriteRule ^artist/(\d+)*$ artist/index.php?id=$1
-RewriteRule ^author/(\d+)*$ author/index.php?id=$1
-RewriteRule ^song/(\d+)*$ song/index.php?id=$1
-RewriteRule ^label/(\d+)*$ label/index.php?id=$1
-RewriteRule ^genre/(\d+)*$ genre/index.php?id=$1
-RewriteRule ^user/(\d+)*$ user/index.php?id=$1
+RewriteRule ^index(\d+)*$ views/elements/index.php
+RewriteRule ^(\d+)*$ views/elements/index.php
+RewriteRule ^login(\d+)*$ views/elements/login.php
+RewriteRule ^album/(\d+)*$ views/album/index.php?id=$1
+RewriteRule ^artist/(\d+)*$ views/artist/index.php?id=$1
+RewriteRule ^author/(\d+)*$ views/author/index.php?id=$1
+RewriteRule ^song/(\d+)*$ views/song/index.php?id=$1
+RewriteRule ^label/(\d+)*$ views/label/index.php?id=$1
+RewriteRule ^genre/(\d+)*$ views/genre/index.php?id=$1
+RewriteRule ^user/(\d+)*$ views/user/index.php?id=$1
+
+RewriteRule ^album/all(\d+)*$ views/album/all.php
+RewriteRule ^artist/all(\d+)*$ views/artist/all.php
+RewriteRule ^author/all(\d+)*$ views/author/all.php
+RewriteRule ^song/all(\d+)*$ views/song/all.php
+RewriteRule ^label/all(\d+)*$ views/label/all.php
+RewriteRule ^genre/all(\d+)*$ views/genre/all.php
+RewriteRule ^user/all(\d+)*$ views/user/all.php

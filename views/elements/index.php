@@ -1,10 +1,10 @@
 <?php
 
-require_once "conf.php";
+require_once "../../interactors/conf.php";
 session_start();
 
 $title = "Inicio";
-include_once "elements/navbar.php";
+include_once "navbar.php";
 ?>
 <!-- Banner -->
 <section id="banner">
@@ -39,7 +39,7 @@ include_once "elements/navbar.php";
                     <h3>Pellentesque adipis</h3>
                 </header>
                 <div class="image fit">
-                    <img src="images/pic01.jpg" alt="" />
+                    <img src="../../assets/img/pic01.jpg" alt="" />
                 </div>
                 <p>Cumsan mollis eros. Pellentesque a diam sit amet mi magna ullamcorper vehicula. Integer adipiscin sem. Nullam quis massa sit amet lorem ipsum feugiat tempus.</p>
             </div>
@@ -50,7 +50,7 @@ include_once "elements/navbar.php";
                     <h3>Morbi interdum mol</h3>
                 </header>
                 <div class="image fit">
-                    <img src="images/pic02.jpg" alt="" />
+                    <img src="../../assets/img/pic02.jpg" alt="" />
                 </div>
                 <p>Cumsan mollis eros. Pellentesque a diam sit amet mi magna ullamcorper vehicula. Integer adipiscin sem. Nullam quis massa sit amet lorem ipsum feugiat tempus.</p>
             </div>
@@ -101,4 +101,4 @@ include_once "elements/navbar.php";
     <div id="response" class="12u$"></div>
 </section>
 
-<?php include_once "elements/footer.php" ?>
+<?php include_once "footer.php" ?>

@@ -6,7 +6,7 @@
  * Time: 05:53 PM
  */
 
-require_once "../../conf.php";
+require_once "../conf.php";
 
 $sql = "INSERT INTO artistas (nombre, descripcion, pais, debut, retiro) VALUES
  ('{$_POST['nombre']}', '{$_POST['descripcion']}', '{$_POST['pais']}', '{$_POST['debut']}', '{$_POST['retiro']}')";

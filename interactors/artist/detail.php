@@ -6,7 +6,7 @@
  * Time: 04:16 PM
  */
 
-require_once "../../conf.php";
+require_once "../conf.php";
 session_start();
 
 $sql = "SELECT * FROM artistas WHERE idartistas = {$_POST['id']}";
@@ -47,7 +47,7 @@ if ($_SESSION['role'] == "admin") {
     echo "
 		<div align='right'>
             <a class='btn btn-default' href='../artist/{$row['idartistas']}'>Editar</a>
-            <a class='btn btn-danger' onclick='confirmDelete(\"{$row['nombre']}\",\"{$row['idartistas']}\")'>Eliminar</a>
+            <a class='btn btn-danger' onclick='confirmDelete(\"{$row['nombre']}\", \"{$row['idartistas']}\", \"artista\", \"artist\")'>Eliminar</a>
 		</div>";
 }
 

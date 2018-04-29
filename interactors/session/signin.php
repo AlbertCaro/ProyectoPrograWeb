@@ -6,7 +6,7 @@
  * Time: 10:13 PM
  */
 
-include "../../conf.php";
+include "../conf.php";
 
 $continue = detectEmptyRows($_POST);
 

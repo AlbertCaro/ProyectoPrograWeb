@@ -17,20 +17,24 @@
         <div class="copyright">
             &copy; Untitled Design: <a href="https://templated.co/">TEMPLATED</a>. Images <a href="https://unsplash.com/">Unsplash</a>
         </div>
+        <div id="sessionResponse">
+
+        </div>
     </div>
     <br/><br/><br/><br/><br/><br/><br/>
 </section>
 
-<!-- Scripts -->
+<!-- Scripts -->}
 <script src="<?php echo $dots ?>assets/js/skel.min.js"></script>
 <script src="<?php echo $dots ?>assets/js/util.js"></script>
 <script src="<?php echo $dots ?>assets/js/main.js"></script>
 <script>
     function logout(event) {
         event.preventDefault();
-        sendData({
+        sendDataDiv({
             'count' : <?php echo count($array) ?>
-        }, '<?php if (isset($_SESSION['valid'])) echo $dots ?>interactors/session/logout.php');
+        }, '<?php if (isset($_SESSION['valid'])) echo $dots ?>interactors/session/logout.php',
+        "#sessionResponse");
     }
 </script>
 </body>

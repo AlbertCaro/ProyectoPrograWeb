@@ -6,7 +6,7 @@
  * Time: 11:47 PM
  */
 
-require_once "../../conf.php";
+require_once "../conf.php";
 
 $continue = true;
 $sql = "UPDATE usuarios SET

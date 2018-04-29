@@ -5,7 +5,7 @@
  * Date: 25/04/2018
  * Time: 10:18 AM
  */
-require_once "../../conf.php";
+require_once "../conf.php";
 
 $sql = "SELECT * FROM artistas WHERE nombre LIKE '%{$_POST['search']}%' OR pais LIKE '%{$_POST['search']}%' OR debut LIKE '%{$_POST['search']}%'";
 $res = $conn -> query($sql);
@@ -19,8 +19,8 @@ if ($count != 0) {
         echo "
         <tr>
             <td>
-                <a href='#' id='detail_button_{$row['idartistas']}' onclick='showDetail(\"{$row['idartistas']}\", \"#detail_{$row['idartistas']}\", event)'>
-                    <img id='image_{$row['idartistas']}' src='../images/more.png' width='15px'>
+                <a href='#' id='detail_button_{$row['idartistas']}' onclick='showDetail(\"{$row['idartistas']}\", \"#detail_{$row['idartistas']}\", event, interactor)'>
+                    <img id='image_{$row['idartistas']}' src='../assets/img/more.png' width='15px'>
                 </a>
             </td>
             <td>{$row['nombre']}</td>

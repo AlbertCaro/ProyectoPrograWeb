@@ -6,7 +6,7 @@
  * Time: 11:47 PM
  */
 
-require_once "../../conf.php";
+require_once "../conf.php";
 
 if ($_POST['retiro'] == "")
     $retiro = "retiro=null";

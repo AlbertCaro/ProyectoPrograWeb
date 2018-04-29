@@ -1,6 +1,6 @@
 <?php
 
-require_once "../conf.php";
+require_once "../../interactors/conf.php";
 
 $title = "Agregar usuario";
 

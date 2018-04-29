@@ -6,7 +6,7 @@
  * Time: 05:53 PM
  */
 
-require_once "../../conf.php";
+require_once "../conf.php";
 
 $sql = "SELECT * FROM usuarios WHERE usuario = '{$_POST['user']}'";
 $res = $conn -> query($sql);

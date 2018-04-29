@@ -5,7 +5,7 @@
  * Date: 25/04/2018
  * Time: 10:18 AM
  */
-require_once "../../conf.php";
+require_once "../conf.php";
 
 $sql = "SELECT idusuarios, usuario, CONCAT(nombre, ' ', apaterno, ' ', amaterno) as nombreCompleto FROM
 usuarios WHERE usuario LIKE '%{$_POST['search']}%' OR CONCAT(nombre, ' ', apaterno, ' ', amaterno) LIKE '%{$_POST['search']}%'";
@@ -20,8 +20,8 @@ if ($count != 0) {
         echo "
         <tr>
             <td>
-                <a href='#' id='detail_button_{$row['idusuarios']}' onclick='showDetail(\"{$row['idusuarios']}\", \"#detail_{$row['idusuarios']}\", event)'>
-                    <img id='image_{$row['idusuarios']}' src='../images/more.png' width='15px'>
+                <a href='#' id='detail_button_{$row['idusuarios']}' onclick='showDetail(\"{$row['idusuarios']}\", \"#detail_{$row['idusuarios']}\", event, \"user\")'>
+                    <img id='image_{$row['idusuarios']}' src='../assets/img/more.png' width='15px'>
                 </a>
             </td>
             <td>{$row['usuario']}</td>

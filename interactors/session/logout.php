@@ -6,7 +6,7 @@
  * Time: 10:57 PM
  */
 
-require_once "../../conf.php";
+require_once "../conf.php";
 
 session_start();
 $_SESSION = [];
