@@ -6,9 +6,9 @@ RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME}\.php -f
 RewriteRule ^(.*)$ $1.php
 
-RewriteRule ^index/(\d+)*$ views/elements/index.php
-RewriteRule ^(\d+)*$ views/elements/index.php
-RewriteRule ^login/(\d+)*$ views/elements/login.php
+RewriteRule ^index/(\d+)*$ views/layout/index.php
+RewriteRule ^(\d+)*$ views/layout/index.php
+RewriteRule ^login/(\d+)*$ views/layout/login.php
 RewriteRule ^album/(\d+)*$ views/album/index.php?id=$1
 RewriteRule ^artist/(\d+)*$ views/artist/index.php?id=$1
 RewriteRule ^author/(\d+)*$ views/author/index.php?id=$1
@@ -30,8 +30,8 @@ RewriteRule ^album/controller/(\d+)*$ controllers/AlbumController.php
 RewriteRule ^artist/controller/(\d+)*$ controllers/ArtistController.php
 RewriteRule ^author/controller/(\d+)*$ controllers/AuthorController.php
 RewriteRule ^song/controller/(\d+)*$ controllers/SongController.php
+RewriteRule ^song/favorites/controller/(\d+)*$ controllers/FavoriteController.php
 RewriteRule ^label/controller/(\d+)*$ controllers/LabelController.php
 RewriteRule ^genre/controller/(\d+)*$ controllers/GenreController.php
 RewriteRule ^user/controller/(\d+)*$ controllers/UserController.php
-RewriteRule ^favorite/controller/(\d+)*$ controllers/FavoriteController.php
 RewriteRule ^login/controller/(\d+)*$ controllers/SessionController.php

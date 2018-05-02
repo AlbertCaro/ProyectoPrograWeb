@@ -39,32 +39,30 @@ function sweetMessage($title, $menssage, $type, $location) {
     </script>";
 }
 
-function error($field) {
-    echo "<script type='text/javascript'>document.getElementById('$field').style.backgroundColor = '#f79694'</script>";
-}
-
-function detectEmptyRows($post) {
-    $continue = true;
-    $focus = true;
-    $count = 0;
-    foreach ($post as $item) {
-        if ($item === ""){
-            $field = array_keys($_POST, $item)[$count];
-            if ($focus) {
-                echo "<script type='text/javascript'>document.getElementById('{$field}').focus()</script>";
-                $focus = false;
-            }
-            $continue = false;
-            error(array_keys($_POST, $item)[$count]);
-            $count++;
-        }
-    }
-    return $continue;
-}
-
 function message($message, $type) {
     echo "<div id=\"message\" class=\"$type\">
             <a href=\"#\" onclick=\"fadeMessage()\" class=\"close\" title=\"close\">×</a>
             <span>{$message}</span>
           </div>";
+}
+
+function formatDate ($date) {
+    return date('Y-m-d', strtotime(str_replace('/', '-', $date)));
+}
+
+function deformatDate ($date) {
+    return date('d-m-Y', strtotime(str_replace('-', '/', $date)));
+}
+
+function tableSelect($conn, $value, $table, $id) {
+    $sql = "SELECT * FROM {$table}";
+    $res = $conn -> query($sql);
+    $rows = $res -> fetchAll();
+    echo "<option value=''>- Seleccione una opción -</option>";
+    foreach ($rows as $row) {
+        echo "<option value='{$row[$id]}' ";
+        if ($row[$id] === $value)
+            echo "selected";
+        echo ">{$row['nombre']}</option>";
+    }
 }

@@ -8,7 +8,10 @@
 
 require_once "conf.php";
 
-$function = $_POST['func'];
+if (isset($_GET['func']))
+    $function = $_GET['func'];
+else
+    $function = $_POST['func'];
 $function($conn);
 
 function table($conn) {
@@ -22,7 +25,7 @@ function table($conn) {
         $rows = $res -> fetchAll();
         foreach ($rows as $row) {
             echo "
-        <tr>
+        <tr id='row_{$row['idartistas']}'>
             <td>
                 <a href='#' id='detail_button_{$row['idartistas']}' onclick='showDetail(\"{$row['idartistas']}\", \"#detail_{$row['idartistas']}\", event, \"artist\")'>
                     <img id='image_{$row['idartistas']}' src='../assets/img/more.png' width='15px'>
@@ -80,7 +83,7 @@ function detail($conn) {
         echo "
 		<div align='right'>
             <a class='btn btn-default' href='../artist/{$row['idartistas']}'>Editar</a>
-            <a class='btn btn-danger' onclick='confirmDelete(\"{$row['nombre']}\", \"{$row['idartistas']}\", \"artista\", \"artist\")'>Eliminar</a>
+            <a class='btn btn-danger' onclick='confirmDelete(\"{$row['nombre']}\", \"{$row['idartistas']}\", \"artista\")'>Eliminar</a>
 		</div>";
     }
 
@@ -99,7 +102,7 @@ function save($conn) {
             'success',
             'all');
     } else {
-        message('No se ha podido guardar el artista.', 'alert alert-danger');
+        message('No se ha podido guardar el artista o no se realizaron cambios.', 'alert alert-danger');
     }
 }
 

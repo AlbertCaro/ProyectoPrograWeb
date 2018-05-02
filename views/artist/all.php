@@ -1,8 +1,8 @@
 <?php
 
-include_once "../elements/session_valid.php";
+include_once "../layout/session_valid.php";
 $title = "Ver artistas";
-include_once "../elements/navbar.php";
+include_once "../layout/navbar.php";
 
 ?>
 
@@ -12,12 +12,7 @@ include_once "../elements/navbar.php";
         <header class="major special">
             <h1>Ver artistas</h1>
             <p>Administrar artistas registrados.</p>
-            <form>
-                <div class="12u 12u$(xsmall)">
-                    <label for="search">Buscar: </label>
-                    <input type="text" id="search" name="search" onkeyup="generateTable('artist')">
-                </div>
-            </form>
+            <?php include_once "../layout/search_form.php" ?>
         </header>
         <table>
             <thead>
@@ -38,4 +33,4 @@ include_once "../elements/navbar.php";
 <script type="text/javascript">
     $(document).ready(generateTable('artist'));
 </script>
-<?php include_once "../elements/footer.php" ?>
+<?php include_once "../layout/footer.php" ?>

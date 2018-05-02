@@ -2,19 +2,30 @@
 
 require_once "../../controllers/conf.php";
 
-$title = "Agregar artista";
+$title = "Agregar album";
 
-include_once "../elements/session_valid.php";
-include_once "../elements/session_roles.php";
+include_once "../layout/session_valid.php";
+include_once "../layout/session_roles.php";
 
 if ($_GET['id'] !== "") {
-    $sql = "SELECT * FROM artistas WHERE idartistas = {$_GET['id']}";
+    $sql = "SELECT * FROM albumes WHERE idalbumes = {$_GET['id']}";
     $res = $conn -> query($sql);
     $rows = ($res -> fetchAll())[0];
-    $title = "Editar artista";
+    $title = "Editar album";
 }
 
-include_once "../elements/navbar.php";
+include_once "../layout/navbar.php";
+
+function typeOptions($selected) {
+    $types = ['LP', 'EP', 'Demo', 'Single'];
+    echo "<option value=''>- Seleccione una opción -</option>";
+    foreach ($types as $type) {
+        echo "<option value='{$type}'";
+        if ($type === $selected)
+            echo "selected";
+        echo ">{$type}</option>";
+    }
+}
 
 ?>
 <!-- Main -->
@@ -24,34 +35,53 @@ include_once "../elements/navbar.php";
             <h1><?php echo $title ?></h1>
         </header>
         <section>
-            <h3>Información del artista</h3>
+            <h3 style="color: #1c1c1c">Información del album</h3>
             <form method="post" id="form" onsubmit="">
                 <div class="row uniform 50%">
-                    <div class="6u 12u$(xsmall)">
-                        <input type="text" name="nombre" id="nombre" value="<?php if ($_GET['id'] !== "") echo $rows['nombre'] ?>"
-                               placeholder="Nombre" required/>
-                        <?php if($_GET['id'] !== "") echo "<input type='hidden' name='id' id='id' value='{$rows['idartistas']}'>" ?>
-                    </div>
-                    <div class="6u$ 12u$(xsmall)">
-                        <input type="text" name="pais" id="pais" value="<?php if ($_GET['id'] !== "") echo $rows['pais'] ?>"
-                               placeholder="País" required/>
+                    <div class="12u 12u$(xsmall)">
+                        <label for="titulo" style="color: #1c1c1c">Título:</label>
+                        <input type="text" name="titulo" id="titulo" value="<?php if ($_GET['id'] !== "") echo $rows['nombre'] ?>"
+                               placeholder="Título del album" required/>
+                        <?php if($_GET['id'] !== "") echo "<input type='hidden' name='id' id='id' value='{$rows['idalbumes']}'>" ?>
                     </div>
                     <div class="6u 12u$(xsmall)">
-                        <input type="text" name="debut" id="debut" value="<?php if ($_GET['id'] !== "") echo $rows['debut'] ?>"
-                               onclick="setYearSelect('debut')" placeholder="Año de debut" required/>
+                        <label for="tipo" style="color: #1c1c1c">Tipo de disco:</label>
+                        <select type="text" name="tipo" id="tipo" required>
+                            <?php if($_GET['id'] !== "") typeOptions($rows['tipo']); else typeOptions(null); ?>
+                        </select>
                     </div>
                     <div class="6u$ 12u$(xsmall)">
-                        <input type="text" name="retiro" id="retiro" value="<?php if ($_GET['id'] !== "") echo $rows['retiro'] ?>"
-                               onclick="setYearSelect('retiro')" placeholder="Año de retiro" />
+                        <label for="publicacion" style="color: #1c1c1c">Fecha de publicación</label>
+                        <input type="text" name="publicacion" id="publicacion" value="<?php if ($_GET['id'] !== "") echo $rows['publicacion'] ?>"
+                               placeholder="Fecha de publicación" required/>
+                    </div>
+                    <div class="6u 12u$(xsmall)">
+                        <label for="disquera" style="color: #1c1c1c">Disquera:</label>
+                        <select type="text" name="disquera" id="disquera" required>
+                            <?php
+                            if($_GET['id'] !== "") tableSelect($conn, $rows['iddisqueras'], 'disqueras', 'iddisqueras');
+                            else tableSelect($conn, null, 'disqueras', 'iddisqueras');
+                            ?>
+                        </select>
+                    </div>
+                    <div class="6u$ 12u$(xsmall)">
+                        <label for="artista" style="color: #1c1c1c">Artista:</label>
+                        <select type="text" name="artista" id="artista" required>
+                            <?php
+                            if($_GET['id'] !== "") tableSelect($conn, $rows['idartistas'], 'artistas', 'idartistas');
+                            else tableSelect($conn, null, 'artistas', 'idartistas');
+                            ?>
+                        </select>
                     </div>
                     <div class="12u$">
+                        <label for="descripcion" style="color: #1c1c1c">Descripción:</label>
                         <textarea name="descripcion" id="descripcion" placeholder="Descripción..." rows="5" required><?php
                             if ($_GET['id'] !== "") echo $rows['descripcion'] ?></textarea>
                     </div>
-                    <div id="response">
+                    <div id="response" class="12u$">
 
                     </div>
-                    <div class="12u$">
+                    <div class="12u$" align="center">
                         <ul class="actions">
                             <li><input type="submit" value="Guardar" class="special" onclick=""/></li>
                         </ul>
@@ -63,7 +93,18 @@ include_once "../elements/navbar.php";
 </section>
 <script type="text/javascript">
     $("#debut").yearselect({
-        order: 'desc'
+        order: 'desc',
+        minLength:1,
+        autoFocus:true
+    });
+
+    $("#disquera").autocomplete({
+        source: '../artist/controller/array'
+    });
+
+    $("#publicacion").datepicker({
+        language: "es",
+        orientation: "bottom auto"
     });
 
     $("#form").validate({
@@ -80,21 +121,19 @@ include_once "../elements/navbar.php";
             }, descripcion: "Debe añadir una descripción del artista"
         }, submitHandler: function () {
             sendData({
-                <?php if ($_GET['id'] !== '') echo '"idartistas" : $(\'#id\').val(),'?>
-                "nombre" : $('#nombre').val(),
-                "pais" : $('#pais').val(),
-                "debut" : $('#debut').val(),
-                "retiro" : $('#retiro').val(),
-                "descripcion" : $('#descripcion').val()
-            }, '<?php
-                if ($_GET['id'] !== "")
-                    echo "../interactors/artist/update.php";
-                else
-                    echo "../interactors/artist/save.php"?>');
+                <?php if ($_GET['id'] !== '') echo '"id" : $(\'#id\').val(),'?>
+                "titulo" : $('#titulo').val(),
+                "tipo" : $('#tipo').val(),
+                "publicacion" : $('#publicacion').val(),
+                "descripcion" : $('#descripcion').val(),
+                "disquera" : $('#disquera').val(),
+                "artista" : $('#artista').val(),
+                "func" : '<?php if ($_GET['id'] !== "") echo "update"; else echo "save"?>'
+            }, 'controller/');
         }, invalidHandler: function () {
             emptyForm()
         }
     });
 </script>
-<?php include_once "../elements/footer.php"; ?>
+<?php include_once "../layout/footer.php"; ?>
 

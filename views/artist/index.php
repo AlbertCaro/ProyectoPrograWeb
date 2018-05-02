@@ -4,8 +4,8 @@ require_once "../../controllers/conf.php";
 
 $title = "Agregar artista";
 
-include_once "../elements/session_valid.php";
-include_once "../elements/session_roles.php";
+include_once "../layout/session_valid.php";
+include_once "../layout/session_roles.php";
 
 if ($_GET['id'] !== "") {
     $sql = "SELECT * FROM artistas WHERE idartistas = {$_GET['id']}";
@@ -14,7 +14,7 @@ if ($_GET['id'] !== "") {
     $title = "Editar artista";
 }
 
-include_once "../elements/navbar.php";
+include_once "../layout/navbar.php";
 
 ?>
 <!-- Main -->
@@ -24,33 +24,43 @@ include_once "../elements/navbar.php";
             <h1><?php echo $title ?></h1>
         </header>
         <section>
-            <h3>Información del artista</h3>
+            <h3 style="color: #1C1C1C">Información del artista</h3>
             <form method="post" id="form">
                 <div class="row uniform 50%">
                     <div class="6u 12u$(xsmall)">
-                        <label for='nombre'>Nombre:</label>
+                        <label for='nombre' style="color: #1C1C1C">Nombre:</label>
                         <input type="text" name="nombre" id="nombre" value="<?php if ($_GET['id'] !== "") echo $rows['nombre'] ?>"
                                placeholder="Nombre completo" required/>
                         <?php if($_GET['id'] !== "") echo "<input type='hidden' name='id' id='id' value='{$rows['idartistas']}'>" ?>
                     </div>
                     <div class="6u$ 12u$(xsmall)">
-                        <label for='pais'>País:</label>
-                        <select id="pais" name="pais" class="selectpicker countrypicker" data-flag="true"
-                                data-live-search="true" <?php if($_GET['id'] !== "") echo "data-default='{$rows['pais']}'" ?> required>
+                        <label for='pais' style="color: #1C1C1C">País:</label>
+                        <select id="pais" name="pais" class="selectpicker countrypicker"
+                            <?php if($_GET['id'] !== "") echo "data-default='{$rows['pais']}'" ?> required>
                         </select>
                     </div>
                     <div class="6u 12u$(xsmall)">
-                        <label for='debut'>Año de debut:</label>
+                        <label for='debut' style="color: #1C1C1C">Año de debut:</label>
                         <input type="text" name="debut" id="debut" value="<?php if ($_GET['id'] !== "") echo $rows['debut'] ?>"
                                onclick="setYearSelect('debut')" placeholder="Año de debut" required/>
                     </div>
                     <div class="6u$ 12u$(xsmall)">
-                        <label for='retiro'>Año de retiro:</label>
+                        <label for='retiro' style="color: #1C1C1C">Año de retiro:</label>
+                        <input type="text" name="retiro" id="retiro" value="<?php if ($_GET['id'] !== "") echo $rows['retiro'] ?>"
+                               onclick="setYearSelect('retiro')" placeholder="Año de retiro" />
+                    </div>
+                    <div class="6u 12u$(xsmall)">
+                        <label for='debut' style="color: #1C1C1C">Año de debut:</label>
+                        <input type="text" name="debut" id="debut" value="<?php if ($_GET['id'] !== "") echo $rows['debut'] ?>"
+                               onclick="setYearSelect('debut')" placeholder="Año de debut" required/>
+                    </div>
+                    <div class="6u$ 12u$(xsmall)">
+                        <label for='retiro' style="color: #1C1C1C">Año de retiro:</label>
                         <input type="text" name="retiro" id="retiro" value="<?php if ($_GET['id'] !== "") echo $rows['retiro'] ?>"
                                onclick="setYearSelect('retiro')" placeholder="Año de retiro" />
                     </div>
                     <div class="12u$">
-                        <label for='descripcion'>Descripción del artísta:</label>
+                        <label for='descripcion' style="color: #1C1C1C">Descripción del artísta:</label>
                         <textarea name="descripcion" id="descripcion" placeholder="Descripción..." rows="5" required><?php
                             if ($_GET['id'] !== "") echo $rows['descripcion'] ?></textarea>
                     </div>
@@ -100,5 +110,5 @@ include_once "../elements/navbar.php";
             }
         });
     </script>
-    <?php include_once "../elements/footer.php"; ?>
+    <?php include_once "../layout/footer.php"; ?>
 

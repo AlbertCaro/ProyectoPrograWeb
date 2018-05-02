@@ -49,7 +49,7 @@ function detail($conn) {
     echo "
 <td colspan='4'>
     <section>
-		<h4>Información del artista</h4>
+		<h4>Información del usuario</h4>
 		<div class=\"row\">
 			<div class=\"6u 12u$(xsmall)\">
 				<div class='12u$'>
@@ -70,15 +70,14 @@ function detail($conn) {
 				<div class='12u$'>
 					<span><strong>Apellido materno:</strong> {$row['amaterno']}</span>
 				</div>
-			</div><br/>
 			</div>
-		</div><br/>";
+		</div>";
 
     if ($_SESSION['role'] == "admin") {
         echo "
 		<div align='right'>
             <a class='btn btn-default' href='../user/{$row['idusuarios']}'>Editar</a>
-            <a class='btn btn-danger' onclick='confirmDelete(\"{$row['nombre']}\", \"{$row['idusuarios']}\", \"usuario\", \"user\")'>Eliminar</a>
+            <a class='btn btn-danger' onclick='confirmDelete(\"{$row['nombre']}\", \"{$row['idusuarios']}\", \"usuario\")'>Eliminar</a>
 		</div>";
     }
 

@@ -4,8 +4,8 @@ require_once "../conf.php";
 
 $title = "Agregar artista";
 
-include_once "../elements/session_valid.php";
-include_once "../elements/session_roles.php";
+include_once "../layout/session_valid.php";
+include_once "../layout/session_roles.php";
 
 if ($_GET['id'] !== "") {
     $sql = "SELECT * FROM artistas WHERE idartistas = {$_GET['id']}";
@@ -14,7 +14,7 @@ if ($_GET['id'] !== "") {
     $title = "Editar artista";
 }
 
-include_once "../elements/navbar.php";
+include_once "../layout/navbar.php";
 
 ?>
 <!-- Main -->
@@ -85,16 +85,13 @@ include_once "../elements/navbar.php";
                 "pais" : $('#pais').val(),
                 "debut" : $('#debut').val(),
                 "retiro" : $('#retiro').val(),
-                "descripcion" : $('#descripcion').val()
-            }, '<?php
-                if ($_GET['id'] !== "")
-                    echo "../interactors/artist/update.php";
-                else
-                    echo "../interactors/artist/save.php"?>');
+                "descripcion" : $('#descripcion').val(),
+                "func" : '<?php if ($_GET['id'] !== "") echo "update"; else echo "save"?>'
+            }, 'controller/');
         }, invalidHandler: function () {
             emptyForm()
         }
     });
 </script>
-<?php include_once "../elements/footer.php"; ?>
+<?php include_once "../layout/footer.php"; ?>
 

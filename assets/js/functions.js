@@ -29,7 +29,7 @@ function sendDataDiv(data, url, div) {
     });
 }
 
-function sendDataDelete(id, message, error) {
+function sendDataDelete(id, message) {
     $.ajax({
         data: {
             "id" : id,
@@ -39,13 +39,11 @@ function sendDataDelete(id, message, error) {
         url: 'controller/',
         success: function (response) {
             if (response === '1') {
-                swal('Eliminado', message, 'success').then(function (value) {
-                    $('row_'+id).remove();
-                });
+                $('#row_'+id).remove();
+                $('#detail_'+id).remove();
+                swal('Eliminado', message, 'success');
             } else {
-                swal('Error', error, 'error').then(function (value) {
-                    $('row_'+id).remove();
-                });
+                swal('Error', 'No se ha podido eliminar el registro.', 'error');
             }
         }
     });
@@ -80,7 +78,7 @@ function hideDetail(id, field, event, interactor) {
         .setAttribute('src', '../assets/img/more.png');
 }
 
-function confirmDelete(name, id, object, interactor) {
+function confirmDelete(name, id, object) {
     swal({
         title: '¿Desea eliminar el '+object+'?',
         text: "Está a punto de eliminar "+ name,
@@ -93,8 +91,7 @@ function confirmDelete(name, id, object, interactor) {
         console.log(result.value);
         if (result.value) {
             sendDataDelete(id, object.charAt(0).toUpperCase() + object.slice(1)+' eliminado correctamente.',
-                'No se ha podido eliminar el '+object+' correctamente.',
-                interactor)
+                'No se ha podido eliminar el '+object+' correctamente.');
         }
     });
 }

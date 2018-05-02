@@ -4,8 +4,8 @@ require_once "../../controllers/conf.php";
 
 $title = "Agregar usuario";
 
-include_once "../elements/session_valid.php";
-include_once "../elements/session_roles.php";
+include_once "../layout/session_valid.php";
+include_once "../layout/session_roles.php";
 
 if ($_GET['id'] !== "") {
     $sql = "SELECT * FROM usuarios WHERE idusuarios = {$_GET['id']}";
@@ -14,7 +14,7 @@ if ($_GET['id'] !== "") {
     $title = "Editar usuario";
 }
 
-include_once "../elements/navbar.php";
+include_once "../layout/navbar.php";
 
 ?>
 <!-- Main -->
@@ -24,41 +24,41 @@ include_once "../elements/navbar.php";
             <h1><?php echo $title ?></h1>
         </header>
         <section>
-            <h3>Información del usuario</h3>
+            <h3 style="color: #1C1C1C">Información del usuario</h3>
             <form method="post" id="form">
                 <div class="row uniform 50%">
                     <?php
                     if ($_GET['id'] === "") {
                         echo "
                         <div class=\"6u 12u$(xsmall)\">
-                            <label for='user'>Usuario:</label>
+                            <label for='user' style=\"color: #1C1C1C\">Usuario:</label>
                             <input type=\"text\" name=\"user\" id=\"user\" placeholder=\"Usuario\" required/>
                         </div>";
                     }
 
                     ?>
                     <div class="<?php if ($_GET['id'] === "") echo "6u"; else echo "12u";?> 12u$(xsmall)">
-                        <label for='nombre'>Nombre:</label>
+                        <label for='nombre' style="color: #1C1C1C">Nombre:</label>
                         <input type="text" name="nombre" id="nombre" value="<?php if ($_GET['id'] !== "") echo $rows['nombre'] ?>"
                                placeholder="Nombre(s)" required/>
                         <?php if($_GET['id'] !== "") echo "<input type='hidden' name='id' id='id' value='{$rows['idusuarios']}'>" ?>
                     </div>
                     <div class="6u 12u$(xsmall)">
-                        <label for='apaterno'>Apellido paterno:</label>
+                        <label for='apaterno' style="color: #1C1C1C">Apellido paterno:</label>
                         <input type="text" name="apaterno" id="apaterno" value="<?php if ($_GET['id'] !== "") echo $rows['apaterno'] ?>"
                                placeholder="Apellido paterno" required/>
                     </div>
                     <div class="6u$ 12u$(xsmall)">
-                        <label for='amaterno'>Apellido materno:</label>
+                        <label for='amaterno' style="color: #1C1C1C">Apellido materno:</label>
                         <input type="text" name="amaterno" id="amaterno" value="<?php if ($_GET['id'] !== "") echo $rows['amaterno'] ?>"
                                placeholder="Apellido materno"/>
                     </div>
                     <div class="6u 12u$(xsmall)">
-                        <label for='pass'>Contraseña:</label>
+                        <label for='pass' style="color: #1C1C1C">Contraseña:</label>
                         <input type="password" name="pass" id="pass" placeholder="Contraseña" <?php if ($_GET['id'] === "") echo 'required' ?> />
                     </div>
                     <div class="6u$ 12u$(xsmall)">
-                        <label for='pass_conf'>Confirmar contraseña:</label>
+                        <label for='pass_conf' style="color: #1C1C1C">Confirmar contraseña:</label>
                         <input type="password" name="pass_conf" id="pass_conf" placeholder="Confirmar contraseña" <?php if ($_GET['id'] === "") echo 'required' ?> />
                     </div>
                     <div id="response" class="12u$">
@@ -122,5 +122,5 @@ include_once "../elements/navbar.php";
         }
     });
 </script>
-<?php include_once "../elements/footer.php"; ?>
+<?php include_once "../layout/footer.php"; ?>
 
