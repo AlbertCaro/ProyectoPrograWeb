@@ -49,16 +49,6 @@ include_once "../layout/navbar.php";
                         <input type="text" name="retiro" id="retiro" value="<?php if ($_GET['id'] !== "") echo $rows['retiro'] ?>"
                                onclick="setYearSelect('retiro')" placeholder="Año de retiro" />
                     </div>
-                    <div class="6u 12u$(xsmall)">
-                        <label for='debut' style="color: #1C1C1C">Año de debut:</label>
-                        <input type="text" name="debut" id="debut" value="<?php if ($_GET['id'] !== "") echo $rows['debut'] ?>"
-                               onclick="setYearSelect('debut')" placeholder="Año de debut" required/>
-                    </div>
-                    <div class="6u$ 12u$(xsmall)">
-                        <label for='retiro' style="color: #1C1C1C">Año de retiro:</label>
-                        <input type="text" name="retiro" id="retiro" value="<?php if ($_GET['id'] !== "") echo $rows['retiro'] ?>"
-                               onclick="setYearSelect('retiro')" placeholder="Año de retiro" />
-                    </div>
                     <div class="12u$">
                         <label for='descripcion' style="color: #1C1C1C">Descripción del artísta:</label>
                         <textarea name="descripcion" id="descripcion" placeholder="Descripción..." rows="5" required><?php
@@ -97,7 +87,7 @@ include_once "../layout/navbar.php";
             }, descripcion: "Debe añadir una descripción del artista"
         }, submitHandler: function () {
             sendData({
-                <?php if ($_GET['id'] !== '') echo '"idartistas" : $(\'#id\').val(),'?>
+                <?php if ($_GET['id'] !== '') echo '"id" : $(\'#id\').val(),'?>
                 "nombre" : $('#nombre').val(),
                 "pais" : $('#pais').val(),
                 "debut" : $('#debut').val(),

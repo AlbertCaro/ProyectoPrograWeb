@@ -23,7 +23,6 @@ function sendDataDiv(data, url, div) {
         type: 'post',
         url: url,
         success: function (response) {
-            console.log(div);
             $(div).html(response);
         }
     });
@@ -69,7 +68,7 @@ function showDetail(id, field, event) {
         .setAttribute('src', '../assets/img/minus.png');
 }
 
-function hideDetail(id, field, event, interactor) {
+function hideDetail(id, field, event) {
     event.preventDefault();
     $(field).html("");
     document.getElementById("detail_button_"+id)

@@ -7,21 +7,13 @@
  */
 
 require_once "conf.php";
+require_once "../models/Album.php";
 
 $function = $_POST['func'];
 $function($conn);
 
 function table($conn) {
-    $sql = "SELECT albumes.*, a.nombre, d.nombre FROM albumes 
-              INNER JOIN disqueras d ON albumes.iddisqueras = d.iddisqueras 
-              INNER JOIN artistas a ON albumes.idartistas = a.idartistas 
-              WHERE 
-              titulo LIKE '%{$_POST['search']}%' OR
-              tipo LIKE '%{$_POST['search']}%' OR
-              publicacion LIKE '%{$_POST['search']}%' OR 
-              a.nombre LIKE '%{$_POST['search']}%' OR 
-              d.nombre LIKE '%{$_POST['search']}%'";
-    $res = $conn -> query($sql);
+    $res = Album::searchAlbum($conn, $_POST['search']);
     $count = $res -> rowCount();
 
     echo $count;
@@ -30,16 +22,16 @@ function table($conn) {
         $rows = $res -> fetchAll();
         foreach ($rows as $row) {
             echo "
-        <tr id='row_{$row['idartistas']}'>
+        <tr id='row_{$row['idalbumes']}'>
             <td>
                 <a href='#' id='detail_button_{$row['idalbumes']}' onclick='showDetail(\"{$row['idalbumes']}\", \"#detail_{$row['idalbumes']}\", event, \"artist\")'>
-                    <img id='image_{$row['idartistas']}' src='../assets/img/more.png' width='15px'>
+                    <img id='image_{$row['idalbumes']}' src='../assets/img/more.png' width='15px'>
                 </a>
             </td>
             <td>{$row['titulo']}</td>
             <td>".deformatDate($row['publicacion'])."</td>
         </tr>
-        <tr id='detail_{$row['idartistas']}'>
+        <tr id='detail_{$row['idalbumes']}'>
         </tr>";
         }
     } else
@@ -49,12 +41,7 @@ function table($conn) {
 function detail($conn) {
     session_start();
 
-    $sql = "SELECT * FROM artistas WHERE idartistas = {$_POST['id']}";
-    $res = $conn -> query($sql);
-    $row = ($res -> fetchAll())[0];
-
-    if ($row['retiro'] === null)
-        $row['retiro'] = "No se ha retirado.";
+    $row = Album::getAlbum($conn, $_POST['id']);
 
     echo "
 <td colspan='4'>
@@ -63,31 +50,34 @@ function detail($conn) {
 		<div class=\"row\">
 			<div class=\"6u 12u$(xsmall)\">
 				<div class='12u$'>
-					<span><strong>Nombre:</strong> {$row['nombre']}</span>
+					<span><strong>Título:</strong> {$row['titulo']}</span>
 				</div>
 				<div class='12u$'>
-					<span><strong>Pais:</strong> {$row['pais']}</span>
+					<span><strong>Tipo:</strong> {$row['tipo']}</span>
 				</div>
 				<div class='12u$'>
-					<span><strong>Debut:</strong> {$row['debut']}</span>
+					<span><strong>Publicación:</strong> ".deformatDate($row['publicacion'])."</span>
 				</div>
 				<div class='12u$'>
-					<span><strong>Retiro:</strong> {$row['retiro']}</span>
+					<span><strong>Artista:</strong> {$row['artista']}</span>
+				</div>
+				<div class='12u$'>
+					<span><strong>Disquera:</strong> {$row['disquera']}</span>
 				</div>
 			</div>
 			<div class=\"6u$ 12u$(xsmall)\">
 				<div class='12u$'>
 					<span><strong>Descripción:</strong> ".$row['descripcion']."</span>
 				</div>
-				</div><br/>
+				</div>
 			</div>
-		</div><br/>";
+		</div>";
 
     if ($_SESSION['role'] == "admin") {
         echo "
 		<div align='right'>
-            <a class='btn btn-default' href='../artist/{$row['idartistas']}'>Editar</a>
-            <a class='btn btn-danger' onclick='confirmDelete(\"{$row['nombre']}\", \"{$row['idartistas']}\", \"artista\")'>Eliminar</a>
+            <a class='btn btn-default' href='../album/{$row['idalbumes']}'>Editar</a>
+            <a class='btn btn-danger' onclick='confirmDelete(\"{$row['titulo']}\", \"{$row['idalbumes']}\", \"album\")'>Eliminar</a>
 		</div>";
     }
 
@@ -97,26 +87,22 @@ function detail($conn) {
 }
 
 function save($conn) {
-    $date = $_POST['publicacion'];
-    $date = str_replace('/', '-', $date);
-    $newDate = date('Y-m-d', strtotime($date));
-    echo $newDate;
+    $album = createAlbum($conn);
+
+    if ($album->save()) {
+        sweetMessage('Guardado correctamente',
+            'Se ha guardado el artista con éxito.',
+            'success',
+            'all');
+    } else {
+        message('No se ha podido guardar el artista o no se realizaron cambios.', 'alert alert-danger');
+    }
 }
 
 function update($conn) {
-    if ($_POST['retiro'] == "")
-        $retiro = "retiro=null";
-    else
-        $retiro = "retiro={$_POST['retiro']}";
+    $album = createAlbum($conn);
 
-    $sql = "UPDATE artistas SET
-    nombre='{$_POST['nombre']}',
-    pais='{$_POST['pais']}', 
-    debut='{$_POST['debut']}', 
-    $retiro, 
-    descripcion='{$_POST['descripcion']}' WHERE idartistas={$_POST['idartistas']}";
-
-    if ($conn -> exec($sql)) {
+    if ($album->update($_POST['id'])) {
         sweetMessage('Actualizado correctamente',
             'Se ha actualizado el artista con éxito.',
             'success',
@@ -130,6 +116,9 @@ function update($conn) {
 }
 
 function delete($conn) {
-    $sql = "DELETE FROM artistas WHERE idartistas = {$_POST['id']}";
-    echo $conn -> exec($sql);
+    echo Album::delete($conn, $_POST['id']);
+}
+
+function createAlbum($conn) {
+    return new Album($conn, $_POST['titulo'], $_POST['tipo'], $_POST['publicacion'], $_POST['descripcion'], $_POST['disquera'], $_POST['artista']);
 }

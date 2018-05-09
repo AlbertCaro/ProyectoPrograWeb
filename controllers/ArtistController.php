@@ -7,6 +7,7 @@
  */
 
 require_once "conf.php";
+require_once "../models/Artist.php";
 
 if (isset($_GET['func']))
     $function = $_GET['func'];
@@ -15,8 +16,7 @@ else
 $function($conn);
 
 function table($conn) {
-    $sql = "SELECT * FROM artistas WHERE nombre LIKE '%{$_POST['search']}%' OR pais LIKE '%{$_POST['search']}%' OR debut LIKE '%{$_POST['search']}%'";
-    $res = $conn -> query($sql);
+    $res = Artist::searchArtist($conn, $_POST['search']);
     $count = $res -> rowCount();
 
     echo $count;
@@ -45,9 +45,7 @@ function table($conn) {
 function detail($conn) {
     session_start();
 
-    $sql = "SELECT * FROM artistas WHERE idartistas = {$_POST['id']}";
-    $res = $conn -> query($sql);
-    $row = ($res -> fetchAll())[0];
+    $row = Artist::getArtist($conn, $_POST['id']);
 
     if ($row['retiro'] === null)
         $row['retiro'] = "No se ha retirado.";
@@ -75,9 +73,9 @@ function detail($conn) {
 				<div class='12u$'>
 					<span><strong>Descripción:</strong> ".$row['descripcion']."</span>
 				</div>
-				</div><br/>
+				</div>
 			</div>
-		</div><br/>";
+		</div>";
 
     if ($_SESSION['role'] == "admin") {
         echo "
@@ -93,10 +91,9 @@ function detail($conn) {
 }
 
 function save($conn) {
-    $sql = "INSERT INTO artistas (nombre, descripcion, pais, debut, retiro) VALUES
- ('{$_POST['nombre']}', '{$_POST['descripcion']}', '{$_POST['pais']}', '{$_POST['debut']}', '{$_POST['retiro']}')";
+    $artist = createArtist($conn);
 
-    if ($conn -> exec($sql)) {
+    if ($artist->save()) {
         sweetMessage('Guardado correctamente',
             'Se ha guardado el artista con éxito.',
             'success',
@@ -107,19 +104,9 @@ function save($conn) {
 }
 
 function update($conn) {
-    if ($_POST['retiro'] == "")
-        $retiro = "retiro=null";
-    else
-        $retiro = "retiro={$_POST['retiro']}";
+    $artist = createArtist($conn);
 
-    $sql = "UPDATE artistas SET
-    nombre='{$_POST['nombre']}',
-    pais='{$_POST['pais']}', 
-    debut='{$_POST['debut']}', 
-    $retiro, 
-    descripcion='{$_POST['descripcion']}' WHERE idartistas={$_POST['idartistas']}";
-
-    if ($conn -> exec($sql)) {
+    if ($artist->update($_POST['id'])) {
         sweetMessage('Actualizado correctamente',
             'Se ha actualizado el artista con éxito.',
             'success',
@@ -133,6 +120,9 @@ function update($conn) {
 }
 
 function delete($conn) {
-    $sql = "DELETE FROM artistas WHERE idartistas = {$_POST['id']}";
-    echo $conn -> exec($sql);
+    echo Artist::delete($conn, $_POST['id']);
+}
+
+function createArtist($conn) {
+    return new Artist($conn, $_POST['nombre'], $_POST['descripcion'], $_POST['pais'], $_POST['debut'], $_POST['retiro']);
 }

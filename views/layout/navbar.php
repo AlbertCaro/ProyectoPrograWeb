@@ -67,8 +67,9 @@ if (count($array) > 3)
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Canciones<span class="caret"></span></a>
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" style="color:#000;" href="'.$dots.'favorites/">Favoritas</a></li>';
-                if ($_SESSION['role'] === 'admin')
-                    echo '<li><a class="dropdown-item" style="color:#000;" href="'.$dots.'song/">Agregar</a></li>';
+                if ($_SESSION['role'] === 'admin') {
+                    echo '<li><a class="dropdown-item" style="color:#000;" href="' . $dots . 'song/">Agregar</a></li>';
+                }
                 echo '
                             <li><a class="dropdown-item" style="color:#000;" href="'.$dots.'song/all">Ver todos</a></li>
                         </ul>
@@ -92,7 +93,7 @@ if (count($array) > 3)
                         </ul>
                     </div>
                     <div class="dropdown inline-div">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Generos<span class="caret"></span></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Géneros<span class="caret"></span></a>
                         <ul class="dropdown-menu">';
                 if ($_SESSION['role'] === 'admin')
                     echo '<li><a class="dropdown-item" style="color:#000;" href="'.$dots.'genre/">Agregar</a></li>';

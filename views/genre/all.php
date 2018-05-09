@@ -18,13 +18,16 @@ include_once "../layout/navbar.php";
             <thead>
                 <tr>
                     <th>Nombre</th>
+                    <?php if($_SESSION['role'] === "admin") {
+                        echo "
                     <th></th>
                     <th></th>
                     <th></th>
                     <th></th>
                     <th></th>
                     <th></th>
-                    <th>Acciones</th>
+                    <th>Acciones</th>";
+                    } ?>
                 </tr>
             </thead>
             <tbody id="response">

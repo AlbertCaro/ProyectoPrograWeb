@@ -12,13 +12,12 @@ $function = $_POST['func'];
 $function($conn);
 
 function table($conn) {
+    session_start();
     $sql = "SELECT * FROM disqueras WHERE nombre LIKE '%{$_POST['search']}%' OR fundacion LIKE '%{$_POST['search']}%'
               OR pais LIKE '{$_POST['search']}'";
     $res = $conn -> query($sql);
     $count = $res -> rowCount();
-
     echo $count;
-
     if ($count != 0) {
         $rows = $res -> fetchAll();
         foreach ($rows as $row) {
@@ -32,13 +31,17 @@ function table($conn) {
             </td>
             <td>
                 {$row['pais']}
-            </td>
+            </td>";
+
+            if ($_SESSION['role'] == "admin") {
+                echo "
             <td>
                 <a class='btn btn-default' href='../label/{$row['iddisqueras']}'>Editar</a>
                 <a class='btn btn-danger'
                 onclick='confirmDelete(\"{$row['nombre']}\", \"{$row['iddisqueras']}\", \"disquera\")'>Eliminar</a>
-            </td>
-        </tr>";
+            </td>";
+            }
+            echo "</tr>";
         }
     } else
         echo "<tr><td colspan='2'>No se obtuvieron resultados.</td></tr>";

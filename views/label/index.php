@@ -58,7 +58,8 @@ include_once "../layout/navbar.php";
 </section>
 <script type="text/javascript">
     $("#fundacion").yearselect({
-        order: 'desc'
+        order: 'desc',
+        start: 1900
     });
 
     $("#form").validate({

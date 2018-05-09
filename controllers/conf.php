@@ -46,12 +46,12 @@ function message($message, $type) {
           </div>";
 }
 
-function formatDate ($date) {
+function formatDate($date) {
     return date('Y-m-d', strtotime(str_replace('/', '-', $date)));
 }
 
-function deformatDate ($date) {
-    return date('d-m-Y', strtotime(str_replace('-', '/', $date)));
+function deformatDate($date) {
+    return date('d/m/Y', strtotime(str_replace('-', '/', $date)));
 }
 
 function tableSelect($conn, $value, $table, $id) {

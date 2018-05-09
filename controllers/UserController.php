@@ -7,14 +7,13 @@
  */
 
 require_once "conf.php";
+require_once "../models/User.php";
 
 $function = $_POST['func'];
 $function($conn);
 
 function table($conn) {
-    $sql = "SELECT idusuarios, usuario, CONCAT(nombre, ' ', apaterno, ' ', amaterno) as nombreCompleto FROM
-usuarios WHERE usuario LIKE '%{$_POST['search']}%' OR CONCAT(nombre, ' ', apaterno, ' ', amaterno) LIKE '%{$_POST['search']}%'";
-    $res = $conn -> query($sql);
+    $res = User::searchArtist($conn, $_POST['search']);
     $count = $res -> rowCount();
 
     echo $count;
@@ -41,10 +40,7 @@ usuarios WHERE usuario LIKE '%{$_POST['search']}%' OR CONCAT(nombre, ' ', apater
 
 function detail($conn) {
     session_start();
-
-    $sql = "SELECT * FROM usuarios WHERE idusuarios = {$_POST['id']}";
-    $res = $conn -> query($sql);
-    $row = ($res -> fetchAll())[0];
+    $row = User::getUser($conn, $_POST['id']);
 
     echo "
 <td colspan='4'>
@@ -144,6 +140,5 @@ function update($conn) {
 }
 
 function delete($conn) {
-    $sql = "DELETE FROM usuarios WHERE idusuarios = {$_POST['id']}";
-    echo $conn -> exec($sql);
+    echo User::delete($conn, $_POST['id']);
 }

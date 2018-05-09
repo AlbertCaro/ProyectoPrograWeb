@@ -20,7 +20,7 @@ include_once "../layout/navbar.php";
                     <th>Nombre</th>
                     <th>Fundación</th>
                     <th>País</th>
-                    <th>Acciones</th>
+                    <?php if ($_SESSION['role'] === "admin") echo '<th>Acciones</th>'?>
                 </tr>
             </thead>
             <tbody id="response">

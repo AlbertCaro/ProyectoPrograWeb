@@ -40,7 +40,7 @@ function typeOptions($selected) {
                 <div class="row uniform 50%">
                     <div class="12u 12u$(xsmall)">
                         <label for="titulo" style="color: #1c1c1c">Título:</label>
-                        <input type="text" name="titulo" id="titulo" value="<?php if ($_GET['id'] !== "") echo $rows['nombre'] ?>"
+                        <input type="text" name="titulo" id="titulo" value="<?php if ($_GET['id'] !== "") echo $rows['titulo'] ?>"
                                placeholder="Título del album" required/>
                         <?php if($_GET['id'] !== "") echo "<input type='hidden' name='id' id='id' value='{$rows['idalbumes']}'>" ?>
                     </div>
@@ -52,7 +52,7 @@ function typeOptions($selected) {
                     </div>
                     <div class="6u$ 12u$(xsmall)">
                         <label for="publicacion" style="color: #1c1c1c">Fecha de publicación</label>
-                        <input type="text" name="publicacion" id="publicacion" value="<?php if ($_GET['id'] !== "") echo $rows['publicacion'] ?>"
+                        <input type="text" name="publicacion" id="publicacion" value="<?php if ($_GET['id'] !== "") echo deformatDate($rows['publicacion']) ?>"
                                placeholder="Fecha de publicación" required/>
                     </div>
                     <div class="6u 12u$(xsmall)">
@@ -98,27 +98,19 @@ function typeOptions($selected) {
         autoFocus:true
     });
 
-    $("#disquera").autocomplete({
-        source: '../artist/controller/array'
-    });
-
     $("#publicacion").datepicker({
         language: "es",
         orientation: "bottom auto"
     });
 
     $("#form").validate({
-        rules: {
-            retiro: "number"
-        }, messages: {
-            nombre: "Debe especificar el nombre",
-            pais: "Debe especificar el país",
-            debut: {
-                required: "Debe especificar el año de debut",
-                number: "No puede ingresar letras en un año"
-            }, retiro: {
-                number: "No puede ingresar letras en un año"
-            }, descripcion: "Debe añadir una descripción del artista"
+        messages: {
+            titulo: "Debe especificar el título del album",
+            tipo: "Debe especificar tipo de album",
+            publicacion: "Debe especificar la fecha de publicación",
+            disquera: "Debe seleccionar una disquera",
+            artista: "Debe seleccionar un artista",
+            descripcion: "Debe añadir una descripción del artista"
         }, submitHandler: function () {
             sendData({
                 <?php if ($_GET['id'] !== '') echo '"id" : $(\'#id\').val(),'?>

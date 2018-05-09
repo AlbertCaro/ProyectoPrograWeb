@@ -12,6 +12,7 @@ $function = $_POST['func'];
 $function($conn);
 
 function table($conn) {
+    session_start();
     $sql = "SELECT * FROM generos WHERE nombre LIKE '%{$_POST['search']}%'";
     $res = $conn -> query($sql);
     $count = $res -> rowCount();
@@ -25,12 +26,16 @@ function table($conn) {
         <tr id='row_{$row['idgeneros']}'>
             <td colspan='7'>
                 {$row['nombre']}
-            </td>
+            </td>";
+            if ($_SESSION['role'] === "admin"){
+                echo "
             <td>
                 <a class='btn btn-default' href='../genre/{$row['idgeneros']}'>Editar</a>
                 <a class='btn btn-danger'
                 onclick='confirmDelete(\"{$row['nombre']}\", \"{$row['idgeneros']}\", \"género\")'>Eliminar</a>
-            </td>
+            </td>";
+            }
+            echo "
         </tr>";
         }
     } else
