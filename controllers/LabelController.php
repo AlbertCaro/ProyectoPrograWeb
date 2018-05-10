@@ -7,49 +7,21 @@
  */
 
 require_once "conf.php";
+require_once "../models/Label.php";
 
 $function = $_POST['func'];
 $function($conn);
 
 function table($conn) {
     session_start();
-    $sql = "SELECT * FROM disqueras WHERE nombre LIKE '%{$_POST['search']}%' OR fundacion LIKE '%{$_POST['search']}%'
-              OR pais LIKE '{$_POST['search']}'";
-    $res = $conn -> query($sql);
+    $res = Label::searchLabel($conn, $_POST['search']);
     $count = $res -> rowCount();
-    echo $count;
-    if ($count != 0) {
-        $rows = $res -> fetchAll();
-        foreach ($rows as $row) {
-            echo "
-        <tr id='row_{$row['iddisqueras']}'>
-            <td>
-                {$row['nombre']}
-            </td>
-            <td>
-                {$row['fundacion']}
-            </td>
-            <td>
-                {$row['pais']}
-            </td>";
-
-            if ($_SESSION['role'] == "admin") {
-                echo "
-            <td>
-                <a class='btn btn-default' href='../label/{$row['iddisqueras']}'>Editar</a>
-                <a class='btn btn-danger'
-                onclick='confirmDelete(\"{$row['nombre']}\", \"{$row['iddisqueras']}\", \"disquera\")'>Eliminar</a>
-            </td>";
-            }
-            echo "</tr>";
-        }
-    } else
-        echo "<tr><td colspan='2'>No se obtuvieron resultados.</td></tr>";
+    require_once "../views/label/row.php";
 }
 
 function save($conn) {
-    $sql = "INSERT INTO disqueras (nombre, fundacion, pais) VALUES ('{$_POST['nombre']}', '{$_POST['fundacion']}', '{$_POST['pais']}')";
-    if ($conn -> exec($sql)) {
+    $label = createLabel($conn);
+    if ($label -> save()) {
         sweetMessage('Guardado correctamente',
             'Se ha guardado la disquera con éxito.',
             'success',
@@ -59,8 +31,8 @@ function save($conn) {
 }
 
 function update($conn) {
-    $sql = "UPDATE disqueras SET nombre = '{$_POST['nombre']}', fundacion = '{$_POST['fundacion']}', pais = '{$_POST['pais']}' WHERE iddisqueras = {$_POST['id']}";
-    if ($conn -> exec($sql)) {
+    $label = createLabel($conn);
+    if ($label -> update($_POST['id'])) {
         sweetMessage('Actualizado correctamente',
             'Se ha actualizado la disquera con éxito.',
             'success',
@@ -70,6 +42,9 @@ function update($conn) {
 }
 
 function delete($conn) {
-    $sql = "DELETE FROM disqueras WHERE iddisqueras = {$_POST['id']}";
-    echo $conn -> exec($sql);
+    echo Label::delete($conn, $_POST['id']);
+}
+
+function createLabel($conn) {
+    return new Label($conn, $_POST['nombre'], $_POST['fundacion'], $_POST['pais']);
 }

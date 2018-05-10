@@ -8,7 +8,7 @@
 
 class User
 {
-    private $conn, $usuario, $nombre, $apaterno, $amaterno, $rol;
+    private $conn, $usuario, $nombre, $apaterno, $amaterno, $pass, $rol;
 
     /**
      * User constructor.
@@ -17,24 +17,47 @@ class User
      * @param $nombre
      * @param $apaterno
      * @param $amaterno
+     * @param $pass
      * @param $rol
      */
-    public function __construct($conn, $usuario, $nombre, $apaterno, $amaterno, $rol)
+    public function __construct($conn, $usuario, $nombre, $apaterno, $amaterno, $pass, $rol)
     {
         $this->conn = $conn;
         $this->usuario = $usuario;
         $this->nombre = $nombre;
         $this->apaterno = $apaterno;
         $this->amaterno = $amaterno;
+        $this->pass = $pass;
         $this->rol = $rol;
     }
 
-    public function save() {
 
+    public function save() {
+        $sql = "INSERT INTO usuarios (usuario, pass, nombre, apaterno, amaterno, rol)
+               VALUES ('{$this->usuario}', MD5('{$this->pass}'), '{$this->nombre}', '{$this->apaterno}', '{$this->amaterno}', 'normal')";
+        return $this->conn->exec($sql);
     }
 
-    public function update() {
+    public function update($id) {
+        $sql = "UPDATE usuarios SET
+                nombre = '{$this->nombre}',
+                apaterno = '{$this->apaterno}',
+                amaterno = '{$this->amaterno}'";
+        if ($this->pass !== "") {
+            $sql .= ", pass = MD5('{$this->pass}')";
+        }
+        $sql .= " WHERE idusuarios = '{$id}'";
 
+        return $this->conn->exec($sql);
+    }
+
+    public function comparePassword($pass_conf) {
+        return $this->pass == $pass_conf;
+    }
+
+    public function find() {
+        $sql = "SELECT * FROM usuarios WHERE usuario = '{$this->usuario}'";
+        return $this -> conn -> query($sql) -> rowCount();
     }
 
     public function delete($conn, $id) {
