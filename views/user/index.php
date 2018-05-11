@@ -34,13 +34,12 @@ include_once "../layout/navbar.php";
                             <input type=\"text\" name=\"user\" id=\"user\" placeholder=\"Usuario\" required/>
                         </div>";
                     }
-
                     ?>
                     <div class="<?php if ($_GET['id'] === "") echo "6u"; else echo "12u";?> 12u$(xsmall)">
                         <label for='nombre' style="color: #1C1C1C">Nombre:</label>
                         <input type="text" name="nombre" id="nombre" value="<?php if ($_GET['id'] !== "") echo $rows['nombre'] ?>"
                                placeholder="Nombre(s)" required/>
-                        <?php if($_GET['id'] !== "") echo "<input type='hidden' name='id' id='id' value='{$rows['idusuarios']}'>" ?>
+                        <?php if($_GET['id'] !== "") echo "<input type='hidden' name='user' id='user' value='{$rows['usuario']}'>" ?>
                     </div>
                     <div class="6u 12u$(xsmall)">
                         <label for='apaterno' style="color: #1C1C1C">Apellido paterno:</label>
@@ -103,12 +102,7 @@ include_once "../layout/navbar.php";
             }
         }, submitHandler: function () {
             sendData({
-                <?php
-                if ($_GET['id'] !== '')
-                    echo '"id" : $("#id").val(),';
-                else
-                    echo '"user" : $("#user").val(),';
-                ?>
+                "user" : $("#user").val(),
                 "nombre" : $('#nombre').val(),
                 "apaterno" : $('#apaterno').val(),
                 "amaterno" : $('#amaterno').val(),

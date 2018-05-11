@@ -38,15 +38,14 @@ class User
         return $this->conn->exec($sql);
     }
 
-    public function update($id) {
+    public function update() {
         $sql = "UPDATE usuarios SET
                 nombre = '{$this->nombre}',
                 apaterno = '{$this->apaterno}',
                 amaterno = '{$this->amaterno}'";
-        if ($this->pass !== "") {
+        if ($this->pass !== "")
             $sql .= ", pass = MD5('{$this->pass}')";
-        }
-        $sql .= " WHERE idusuarios = '{$id}'";
+        $sql .= " WHERE usuario = '{$this->usuario}'";
 
         return $this->conn->exec($sql);
     }

@@ -26,7 +26,6 @@ function detail($conn) {
 
 function save($conn) {
     $user = createUser($conn);
-
     if (!$user -> find()) {
         if ($user -> comparePassword($_POST['pass_conf'])) {
             if ($user -> save()) {
@@ -44,19 +43,14 @@ function save($conn) {
 
 function update($conn) {
     $user = createUser($conn);
-
     if ($user ->comparePassword($_POST['pass_conf'])) {
-        if ($user -> update($_POST['id'])) {
+        if ($user -> update()) {
             sweetMessage('Actualizado correctamente',
                 'Se ha actualizado el artista con éxito.',
                 'success',
                 'all');
-        } else {
-            sweetMessage('No se ha actualizado',
-                'Ah ocurrido un error o no se han hecho cambios.',
-                'error',
-                'all');
-        }
+        } else
+            message('No se ha podido actualizar el usuario o no se han realizado cambios.', 'alert alert-danger');
     } else
         message('Las contraseñas no coinciden.','alert alert-danger');
 }
