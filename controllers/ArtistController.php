@@ -31,9 +31,10 @@ function detail($conn) {
 }
 
 function save($conn) {
-    $artist = createArtist($conn);
 
-    if ($artist->save()) {
+    $artist = new Artist($conn, $_POST['nombre'], $_POST['descripcion'], $_POST['pais'], $_POST['debut'], $_POST['retiro']);
+    echo "zi";
+    if ($artist -> save()) {
         sweetMessage('Guardado correctamente',
             'Se ha guardado el artista con éxito.',
             'success',
@@ -44,7 +45,7 @@ function save($conn) {
 }
 
 function update($conn) {
-    $artist = createArtist($conn);
+    $artist = new Artist($conn, $_POST['nombre'], $_POST['descripcion'], $_POST['pais'], $_POST['debut'], $_POST['retiro']);
 
     if ($artist->update($_POST['id'])) {
         sweetMessage('Actualizado correctamente',

@@ -26,10 +26,10 @@ class Artist
         $this->descripcion = $descripcion;
         $this->pais = $pais;
         $this->debut = $debut;
-        $this->retiro = $retiro;
-        echo $retiro;
-        echo $this->retiro;
-        die();
+        if ($retiro == "")
+            $this->retiro = null;
+        else
+            $this->retiro = $retiro;
     }
 
 

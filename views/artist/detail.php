@@ -34,7 +34,7 @@ session_start();
         <?php
         if ($_SESSION['role'] == "admin") {
             echo "
-            <div align='right'>
+            <div align='right' class='12u$'>
                 <a class='btn btn-default' href='../artist/{$row['idartistas']}'>Editar</a>
                 <a class='btn btn-danger' onclick='confirmDelete(\"{$row['nombre']}\", \"{$row['idartistas']}\", \"artista\")'>Eliminar</a>
             </div>";

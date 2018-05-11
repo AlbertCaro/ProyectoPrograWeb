@@ -1,5 +1,5 @@
 @import url(font-awesome.min.css);
-@import url("https://fonts.googleapis.com/css?family=Lato:300,400,700|Pacifico");
+@import url("https://fonts.googleapis.com/css?family=Permanent+Marker|Roboto:300i,400,700");
 
 /*
 	Introspect by TEMPLATED
@@ -1589,7 +1589,7 @@ body {
 }
 
 body, input, select, textarea {
-	font-family: "Lato", sans-serif;
+	font-family: "Roboto", sans-serif;
 	font-size: 15pt;
 	font-weight: 300;
 	line-height: 2;
@@ -3128,7 +3128,7 @@ body {
 }
 
 #header .logo {
-	font-family: 'Pacifico', cursive;
+	font-family: 'Permanent Marker', cursive;
 	display: inline-block;
 	height: inherit;
 	left: 0;
