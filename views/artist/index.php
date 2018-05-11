@@ -1,6 +1,7 @@
 <?php
 
 require_once "../../database/conf.php";
+require_once "../../models/Artist.php";
 
 $title = "Agregar artista";
 
@@ -8,9 +9,7 @@ include_once "../layout/session_valid.php";
 include_once "../layout/session_roles.php";
 
 if ($_GET['id'] !== "") {
-    $sql = "SELECT * FROM artistas WHERE idartistas = {$_GET['id']}";
-    $res = $conn -> query($sql);
-    $rows = ($res -> fetchAll())[0];
+    $rows = Artist::getArtist($conn, $_GET['id']);
     $title = "Editar artista";
 }
 

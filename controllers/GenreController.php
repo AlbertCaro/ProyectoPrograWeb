@@ -7,20 +7,21 @@
  */
 
 require_once "../database/conf.php";
+require_once "../models/Genre.php";
 
 $function = $_POST['func'];
 $function($conn);
 
 function table($conn) {
-    $sql = "SELECT * FROM generos WHERE nombre LIKE '%{$_POST['search']}%'";
-    $res = $conn -> query($sql);
+    $res = Genre::search($conn, $_POST['search']);
     $count = $res -> rowCount();
     require_once "../views/genre/row.php";
 }
 
 function save($conn) {
-    $sql = "INSERT INTO generos (nombre) VALUES ('{$_POST['nombre']}')";
-    if ($conn -> exec($sql)) {
+    $genre = createGenre($conn);
+
+    if ($genre -> save()) {
         sweetMessage('Guardado correctamente',
             'Se ha guardado el género con éxito.',
             'success',
@@ -30,8 +31,9 @@ function save($conn) {
 }
 
 function update($conn) {
-    $sql = "UPDATE generos SET nombre = '{$_POST['nombre']}' WHERE idgeneros = {$_POST['id']}";
-    if ($conn -> exec($sql)) {
+    $genre = createGenre($conn);
+
+    if ($genre -> update($_POST['id'])) {
         sweetMessage('Actualizado correctamente',
             'Se ha actualizado el género con éxito.',
             'success',
@@ -41,6 +43,9 @@ function update($conn) {
 }
 
 function delete($conn) {
-    $sql = "DELETE FROM generos WHERE idgeneros = {$_POST['id']}";
-    echo $conn -> exec($sql);
+    echo Genre::delete($conn, $_POST['id']);
+}
+
+function createGenre($conn) {
+    return new Genre($conn, $_POST['nombre']);
 }
