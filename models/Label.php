@@ -40,7 +40,7 @@ class Label
         return $conn -> exec($sql);
     }
 
-    public function searchLabel($conn, $search) {
+    public function search($conn, $search) {
         $sql = "SELECT * FROM disqueras WHERE nombre LIKE '%{$search}%' OR fundacion LIKE '%{$search}%'
               OR pais LIKE '{$search}'";
         return $conn -> query($sql);

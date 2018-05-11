@@ -13,7 +13,7 @@ $function = $_POST['func'];
 $function($conn);
 
 function table($conn) {
-    $res = Album::searchAlbum($conn, $_POST['search']);
+    $res = Album::search($conn, $_POST['search']);
     $count = $res -> rowCount();
     require_once "../views/album/row.php";
 }

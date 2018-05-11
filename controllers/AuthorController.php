@@ -13,7 +13,7 @@ $function = $_POST['func'];
 $function($conn);
 
 function table($conn) {
-    $res = Author::searchAuthor($conn, $_POST['search']);
+    $res = Author::search($conn, $_POST['search']);
     $count = $res -> rowCount();
     require_once '../views/author/row.php';
 }

@@ -66,7 +66,7 @@ class Album
         return ($conn -> query($sql))->fetchAll()[0];
     }
 
-    public function searchAlbum($conn, $search) {
+    public function search($conn, $search) {
         $sql = "SELECT albumes.*, a.nombre, d.nombre FROM albumes 
         INNER JOIN disqueras d ON albumes.iddisqueras = d.iddisqueras 
         INNER JOIN artistas a ON albumes.idartistas = a.idartistas 

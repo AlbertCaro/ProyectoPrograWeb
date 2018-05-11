@@ -40,12 +40,12 @@ class Author
         return $conn -> exec($sql);
     }
 
-    public function getAuthor($conn, $id) {
+    public function get($conn, $id) {
         $sql = "SELECT * FROM autores WHERE idautores = {$id}";
         return ($conn -> query($sql) -> fetchAll())[0];
     }
 
-    public function searchAuthor($conn, $search) {
+    public function search($conn, $search) {
         $sql = "SELECT * FROM autores WHERE CONCAT(nombre,' ',apaterno,' ',amaterno) LIKE '%{$search}%'";
         return $conn -> query($sql);
     }

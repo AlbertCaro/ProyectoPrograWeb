@@ -65,12 +65,12 @@ class User
         echo $conn -> exec($sql);
     }
 
-    public function getUser($conn, $id) {
+    public function get($conn, $id) {
         $sql = "SELECT * FROM usuarios WHERE idusuarios = {$id}";
         return ($conn -> query($sql)) -> fetchAll()[0];
     }
 
-    public function searchArtist($conn, $search) {
+    public function search($conn, $search) {
         $sql = "SELECT idusuarios, usuario, CONCAT(nombre, ' ', apaterno, ' ', amaterno) as nombreCompleto FROM
 usuarios WHERE usuario LIKE '%{$search}%' OR CONCAT(nombre, ' ', apaterno, ' ', amaterno) LIKE '%{$search}%'";
         return $conn -> query($sql);

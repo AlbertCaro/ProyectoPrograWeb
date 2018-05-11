@@ -13,14 +13,14 @@ $function = $_POST['func'];
 $function($conn);
 
 function table($conn) {
-    $res = User::searchArtist($conn, $_POST['search']);
+    $res = User::search($conn, $_POST['search']);
     $count = $res -> rowCount();
     echo $count;
     require_once "../views/user/row.php";
 }
 
 function detail($conn) {
-    $row = User::getUser($conn, $_POST['id']);
+    $row = User::get($conn, $_POST['id']);
     require_once "../views/user/detail.php";
 }
 

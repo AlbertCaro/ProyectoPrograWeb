@@ -9,7 +9,7 @@ include_once "../layout/session_valid.php";
 include_once "../layout/session_roles.php";
 
 if ($_GET['id'] !== "") {
-    $rows = Author::getAuthor($conn, $_GET['id']);
+    $rows = Author::get($conn, $_GET['id']);
     $title = "Editar autor";
 }
 

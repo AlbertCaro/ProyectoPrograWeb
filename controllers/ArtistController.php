@@ -16,13 +16,13 @@ else
 $function($conn);
 
 function table($conn) {
-    $res = Artist::searchArtist($conn, $_POST['search']);
+    $res = Artist::search($conn, $_POST['search']);
     $count = $res -> rowCount();
     require_once "../views/artist/row.php";
 }
 
 function detail($conn) {
-    $row = Artist::getArtist($conn, $_POST['id']);
+    $row = Artist::get($conn, $_POST['id']);
 
     if ($row['retiro'] === null)
         $row['retiro'] = "No se ha retirado.";

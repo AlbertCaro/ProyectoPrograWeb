@@ -54,12 +54,12 @@ class Artist
         return $conn->exec($sql);
     }
 
-    public function getArtist($conn, $id) {
+    public function get($conn, $id) {
         $sql = "SELECT * FROM artistas WHERE idartistas = {$id}";
         return ($conn -> query($sql))->fetchAll()[0];
     }
 
-    public function searchArtist($conn, $search) {
+    public function search($conn, $search) {
         $sql = "SELECT * FROM artistas WHERE nombre LIKE '%{$search}%' OR pais LIKE '%{$search}%' OR debut LIKE '%{$search}%'";
         return $conn -> query($sql);
     }

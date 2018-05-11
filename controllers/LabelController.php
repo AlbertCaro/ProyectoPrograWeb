@@ -13,7 +13,7 @@ $function = $_POST['func'];
 $function($conn);
 
 function table($conn) {
-    $res = Label::searchLabel($conn, $_POST['search']);
+    $res = Label::search($conn, $_POST['search']);
     $count = $res -> rowCount();
     require_once "../views/label/row.php";
 }
