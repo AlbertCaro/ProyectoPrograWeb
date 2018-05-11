@@ -6,14 +6,13 @@
  * Time: 01:10 PM
  */
 
-require_once "conf.php";
+require_once "../database/conf.php";
 require_once "../models/Label.php";
 
 $function = $_POST['func'];
 $function($conn);
 
 function table($conn) {
-    session_start();
     $res = Label::searchLabel($conn, $_POST['search']);
     $count = $res -> rowCount();
     require_once "../views/label/row.php";

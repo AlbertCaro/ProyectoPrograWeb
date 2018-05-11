@@ -1,17 +1,16 @@
 <?php
 
-require_once "../conf.php";
+require_once "../../database/conf.php";
+require_once "../../models/Author.php";
 
-$title = "Agregar artista";
+$title = "Agregar autor";
 
 include_once "../layout/session_valid.php";
 include_once "../layout/session_roles.php";
 
 if ($_GET['id'] !== "") {
-    $sql = "SELECT * FROM artistas WHERE idartistas = {$_GET['id']}";
-    $res = $conn -> query($sql);
-    $rows = ($res -> fetchAll())[0];
-    $title = "Editar artista";
+    $rows = Author::getAuthor($conn, $_GET['id']);
+    $title = "Editar autor";
 }
 
 include_once "../layout/navbar.php";
@@ -24,34 +23,26 @@ include_once "../layout/navbar.php";
             <h1><?php echo $title ?></h1>
         </header>
         <section>
-            <h3>Información del artista</h3>
+            <h3>Información del autor</h3>
             <form method="post" id="form" onsubmit="">
                 <div class="row uniform 50%">
-                    <div class="6u 12u$(xsmall)">
-                        <input type="text" name="nombre" id="nombre" value="<?php if ($_GET['id'] !== "") echo $rows['nombre'] ?>"
-                               placeholder="Nombre" required/>
-                        <?php if($_GET['id'] !== "") echo "<input type='hidden' name='id' id='id' value='{$rows['idartistas']}'>" ?>
-                    </div>
-                    <div class="6u$ 12u$(xsmall)">
-                        <input type="text" name="pais" id="pais" value="<?php if ($_GET['id'] !== "") echo $rows['pais'] ?>"
-                               placeholder="País" required/>
-                    </div>
-                    <div class="6u 12u$(xsmall)">
-                        <input type="text" name="debut" id="debut" value="<?php if ($_GET['id'] !== "") echo $rows['debut'] ?>"
-                               onclick="setYearSelect('debut')" placeholder="Año de debut" required/>
-                    </div>
-                    <div class="6u$ 12u$(xsmall)">
-                        <input type="text" name="retiro" id="retiro" value="<?php if ($_GET['id'] !== "") echo $rows['retiro'] ?>"
-                               onclick="setYearSelect('retiro')" placeholder="Año de retiro" />
-                    </div>
                     <div class="12u$">
-                        <textarea name="descripcion" id="descripcion" placeholder="Descripción..." rows="5" required><?php
-                            if ($_GET['id'] !== "") echo $rows['descripcion'] ?></textarea>
+                        <input type="text" name="nombre" id="nombre" value="<?php if ($_GET['id'] !== "") echo $rows['nombre'] ?>"
+                               placeholder="Nombre(s)" required/>
+                        <?php if($_GET['id'] !== "") echo "<input type='hidden' name='id' id='id' value='{$rows['idautores']}'>" ?>
                     </div>
-                    <div id="response">
+                    <div class="6u 12u$(xsmall)">
+                        <input type="text" name="amaterno" id="amaterno" value="<?php if ($_GET['id'] !== "") echo $rows['apaterno'] ?>"
+                               placeholder="Apellido materno" required/>
+                    </div>
+                    <div class="6u$ 12u$(xsmall)">
+                        <input type="text" name="apaterno" id="apaterno" value="<?php if ($_GET['id'] !== "") echo $rows['amaterno'] ?>"
+                               placeholder="Apellido paterno" required/>
+                    </div>
+                    <div id="response" class="12u$">
 
                     </div>
-                    <div class="12u$">
+                    <div class="12u$" align="center">
                         <ul class="actions">
                             <li><input type="submit" value="Guardar" class="special" onclick=""/></li>
                         </ul>
@@ -62,30 +53,17 @@ include_once "../layout/navbar.php";
     </div>
 </section>
 <script type="text/javascript">
-    $("#debut").yearselect({
-        order: 'desc'
-    });
-
     $("#form").validate({
-        rules: {
-            retiro: "number"
-        }, messages: {
+        messages: {
             nombre: "Debe especificar el nombre",
-            pais: "Debe especificar el país",
-            debut: {
-                required: "Debe especificar el año de debut",
-                number: "No puede ingresar letras en un año"
-            }, retiro: {
-                number: "No puede ingresar letras en un año"
-            }, descripcion: "Debe añadir una descripción del artista"
+            apaterno: "Debe especificar el apellido paterno",
+            amaterno: "Debe especificar el apellido materno"
         }, submitHandler: function () {
             sendData({
-                <?php if ($_GET['id'] !== '') echo '"idartistas" : $(\'#id\').val(),'?>
+                <?php if ($_GET['id'] !== '') echo '"id" : $(\'#id\').val(),'?>
                 "nombre" : $('#nombre').val(),
-                "pais" : $('#pais').val(),
-                "debut" : $('#debut').val(),
-                "retiro" : $('#retiro').val(),
-                "descripcion" : $('#descripcion').val(),
+                "apaterno" : $('#apaterno').val(),
+                "amaterno" : $('#amaterno').val(),
                 "func" : '<?php if ($_GET['id'] !== "") echo "update"; else echo "save"?>'
             }, 'controller/');
         }, invalidHandler: function () {

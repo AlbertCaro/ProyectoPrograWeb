@@ -4,7 +4,9 @@
  * Email: albertcaronava@gmail.com
  * Date: 10/05/2018
  * Time: 09:48 AM
- */?>
+ */
+session_start();
+?>
 <td colspan='4'>
     <section>
         <h4>Información del artista</h4>

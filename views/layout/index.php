@@ -1,6 +1,6 @@
 <?php
 
-require_once "../../controllers/conf.php";
+require_once "../../database/conf.php";
 session_start();
 
 $title = "Inicio";

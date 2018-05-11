@@ -6,7 +6,7 @@
  * Time: 01:07 PM
  */
 
-require_once "conf.php";
+require_once "../database/conf.php";
 require_once "../models/Album.php";
 
 $function = $_POST['func'];
@@ -19,7 +19,6 @@ function table($conn) {
 }
 
 function detail($conn) {
-    session_start();
     $row = Album::getAlbum($conn, $_POST['id']);
     require_once "../views/album/detail.php";
 }

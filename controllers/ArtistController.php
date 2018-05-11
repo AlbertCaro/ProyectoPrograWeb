@@ -6,7 +6,7 @@
  * Time: 01:05 AM
  */
 
-require_once "conf.php";
+require_once "../database/conf.php";
 require_once "../models/Artist.php";
 
 if (isset($_GET['func']))
@@ -22,8 +22,6 @@ function table($conn) {
 }
 
 function detail($conn) {
-    session_start();
-
     $row = Artist::getArtist($conn, $_POST['id']);
 
     if ($row['retiro'] === null)

@@ -105,10 +105,12 @@ if (count($array) > 3)
                 if ($_SESSION['role'] === "admin") {
                     echo '
                     <div class="dropdown inline-div">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Usuarios<span class="caret"></span></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Otros<span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" style="color:#000;" href="'.$dots.'user/">Agregar</a></li>
-                            <li><a class="dropdown-item" style="color:#000;" href="'.$dots.'user/all">Ver todos</a></li>
+                            <li><a class="dropdown-item" style="color:#000;" href="'.$dots.'user/">Nuevo usuario</a></li>
+                            <li><a class="dropdown-item" style="color:#000;" href="'.$dots.'user/all">Ver usuarios</a></li>
+                            <li><a class="dropdown-item" style="color:#000;" href="'.$dots.'author/">Nuevo autor</a></li>
+                            <li><a class="dropdown-item" style="color:#000;" href="'.$dots.'author/all">Ver autores</a></li>
                         </ul>
                     </div>';
                 }

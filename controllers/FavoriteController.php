@@ -6,7 +6,7 @@
  * Time: 01:08 PM
  */
 
-require_once "conf.php";
+require_once "../database/conf.php";
 
 $function = $_POST['func'];
 $function($conn);

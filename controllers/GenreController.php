@@ -6,13 +6,12 @@
  * Time: 01:09 PM
  */
 
-require_once "conf.php";
+require_once "../database/conf.php";
 
 $function = $_POST['func'];
 $function($conn);
 
 function table($conn) {
-    session_start();
     $sql = "SELECT * FROM generos WHERE nombre LIKE '%{$_POST['search']}%'";
     $res = $conn -> query($sql);
     $count = $res -> rowCount();

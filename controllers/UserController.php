@@ -6,7 +6,7 @@
  * Time: 01:05 AM
  */
 
-require_once "conf.php";
+require_once "../database/conf.php";
 require_once "../models/User.php";
 
 $function = $_POST['func'];
@@ -20,7 +20,6 @@ function table($conn) {
 }
 
 function detail($conn) {
-    session_start();
     $row = User::getUser($conn, $_POST['id']);
     require_once "../views/user/detail.php";
 }

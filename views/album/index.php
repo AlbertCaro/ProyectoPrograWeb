@@ -1,6 +1,7 @@
 <?php
 
-require_once "../../controllers/conf.php";
+require_once "../../database/conf.php";
+require_once "../../models/Album.php";
 
 $title = "Agregar album";
 
@@ -8,9 +9,7 @@ include_once "../layout/session_valid.php";
 include_once "../layout/session_roles.php";
 
 if ($_GET['id'] !== "") {
-    $sql = "SELECT * FROM albumes WHERE idalbumes = {$_GET['id']}";
-    $res = $conn -> query($sql);
-    $rows = ($res -> fetchAll())[0];
+    $rows = Album::getAlbum($conn, $_GET['id']);
     $title = "Editar album";
 }
 

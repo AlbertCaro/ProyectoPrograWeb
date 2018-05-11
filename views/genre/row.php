@@ -5,7 +5,7 @@
  * Date: 10/05/2018
  * Time: 11:29 AM
  */
-
+session_start();
 if ($count != 0) {
     $rows = $res -> fetchAll();
     foreach ($rows as $row) {
