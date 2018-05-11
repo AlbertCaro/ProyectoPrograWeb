@@ -45,4 +45,9 @@ class Label
               OR pais LIKE '{$search}'";
         return $conn -> query($sql);
     }
+
+    public function get($conn, $id) {
+        $sql = "SELECT * FROM disqueras WHERE iddisqueras = {$id}";
+        return ($conn -> query($sql) -> fetchAll())[0];
+    }
 }
