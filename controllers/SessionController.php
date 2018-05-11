@@ -7,17 +7,15 @@
  */
 
 require_once "../database/conf.php";
+require_once "../models/Session.php";
 
 $function = $_POST['func'];
 $function($conn, $_POST);
 
 function signin($conn) {
-    $sql = "SELECT * FROM usuarios WHERE pass = MD5('{$_POST['pass']}') AND usuario = '{$_POST['user']}'";
-    $res = $conn -> query($sql);
-    $count = $res -> rowCount();
-
-    if ($count !== 0) {
-        $data = $res -> fetchAll()[0];
+    $session = new Session($conn, $_POST['user'], $_POST['pass']);
+    if ($session->verifyCredentials()) {
+        $data = $session->get();
         session_start();
         $_SESSION['valid'] = true;
         $_SESSION['user'] = "{$data['nombre']} {$data['apaterno']} {$data['amaterno']}";

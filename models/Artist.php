@@ -26,16 +26,19 @@ class Artist
         $this->descripcion = $descripcion;
         $this->pais = $pais;
         $this->debut = $debut;
-        if ($retiro == "")
-            $this->retiro = null;
-        else
-            $this->retiro = $retiro;
+        $this->retiro = $retiro;
     }
 
 
     public function save() {
-        $sql = "INSERT INTO artistas (nombre, descripcion, pais, debut, retiro) VALUES
-                ('{$this->nombre}', '{$this->descripcion}', '{$this->pais}', '{$this->debut}', '{$this->retiro}')";
+        $sql = "INSERT INTO artistas (nombre, descripcion, pais, debut";
+        if ($this->retiro !== "")
+            $sql.= ", retiro";
+        $sql.=") VALUES
+                ('{$this->nombre}', '{$this->descripcion}', '{$this->pais}', '{$this->debut}'";
+        if ($this->retiro)
+            $sql.=", '{$this->retiro}'";
+        $sql.=")";
         return $this->conn->exec($sql);
     }
 
@@ -43,9 +46,12 @@ class Artist
         $sql = "UPDATE artistas SET
         nombre='{$this->nombre}',
         pais='{$this->pais}', 
-        debut='{$this->debut}', 
-        retiro='{$this->retiro}', 
-        descripcion='{$this->descripcion}' WHERE idartistas={$id}";
+        debut='{$this->debut}', ";
+
+        if ($this->retiro !== "")
+            $sql.="retiro='{$this->retiro}', ";
+
+        $sql.="descripcion='{$this->descripcion}' WHERE idartistas={$id}";
         return $this->conn->exec($sql);
     }
 

@@ -27,14 +27,14 @@ function save($conn) {
             'success',
             'all');
     } else
-        message('No se ha podido guardar el autor o no se realizaron cambios.', 'alert alert-danger');
+        message('No se ha podido guardar el autor.', 'alert alert-danger');
 }
 
 function update($conn) {
     $author = createAuthor($conn);
 
     if ($author->update($_POST['id'])) {
-        sweetMessage('Guardado correctamente',
+        sweetMessage('Actualizado correctamente',
             'Se ha actualizado el autor con éxito.',
             'success',
             'all');

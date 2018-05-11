@@ -34,8 +34,7 @@ class Album
 
     public function save() {
         $sql = "INSERT INTO albumes (titulo, tipo, publicacion, descripcion, iddisqueras, idartistas) VALUES 
-        '{$this->titulo}', '{$this->tipo}', '".formatDate($this->publicacion)."', '{$this->descripcion}', {$this->disquera}, {$this->artista})";
-
+        ('{$this->titulo}', '{$this->tipo}', '".formatDate($this->publicacion)."', '{$this->descripcion}', {$this->disquera}, {$this->artista})";
         return $this->conn->exec($sql);
     }
 
@@ -57,7 +56,7 @@ class Album
         return $conn -> exec($sql);
     }
 
-    public function getAlbum($conn, $id) {
+    public function get($conn, $id) {
         $sql = "SELECT albumes.*, a.nombre as artista, d.nombre as disquera FROM albumes 
         INNER JOIN artistas a ON albumes.idartistas = a.idartistas
         INNER JOIN disqueras d ON albumes.iddisqueras = d.iddisqueras

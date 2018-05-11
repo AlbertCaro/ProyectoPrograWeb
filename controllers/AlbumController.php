@@ -19,7 +19,7 @@ function table($conn) {
 }
 
 function detail($conn) {
-    $row = Album::getAlbum($conn, $_POST['id']);
+    $row = Album::get($conn, $_POST['id']);
     require_once "../views/album/detail.php";
 }
 
@@ -31,9 +31,8 @@ function save($conn) {
             'Se ha guardado el artista con éxito.',
             'success',
             'all');
-    } else {
-        message('No se ha podido guardar el artista o no se realizaron cambios.', 'alert alert-danger');
-    }
+    } else
+        message('No se ha podido guardar el album.', 'alert alert-danger');
 }
 
 function update($conn) {
@@ -44,12 +43,8 @@ function update($conn) {
             'Se ha actualizado el artista con éxito.',
             'success',
             'all');
-    } else {
-        sweetMessage('No se ha actualizado',
-            'Ah ocurrido un error o no se han hecho cambios.',
-            'error',
-            'all');
-    }
+    } else
+        message('No se ha podido actualizar el album o no ha introducido cambios.', 'alert alert-danger');
 }
 
 function delete($conn) {

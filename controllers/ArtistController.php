@@ -31,33 +31,25 @@ function detail($conn) {
 }
 
 function save($conn) {
-
     $artist = new Artist($conn, $_POST['nombre'], $_POST['descripcion'], $_POST['pais'], $_POST['debut'], $_POST['retiro']);
-    echo "zi";
     if ($artist -> save()) {
         sweetMessage('Guardado correctamente',
             'Se ha guardado el artista con éxito.',
             'success',
             'all');
-    } else {
-        message('No se ha podido guardar el artista o no se realizaron cambios.', 'alert alert-danger');
-    }
+    } else
+        message('No se ha podido guardar el artista.', 'alert alert-danger');
 }
 
 function update($conn) {
     $artist = new Artist($conn, $_POST['nombre'], $_POST['descripcion'], $_POST['pais'], $_POST['debut'], $_POST['retiro']);
-
     if ($artist->update($_POST['id'])) {
         sweetMessage('Actualizado correctamente',
             'Se ha actualizado el artista con éxito.',
             'success',
             'all');
-    } else {
-        sweetMessage('No se ha actualizado',
-            'Ah ocurrido un error o no se han hecho cambios.',
-            'error',
-            'all');
-    }
+    } else
+        message('No se ha podido artista el artista o no se realizaron cambios.', 'alert alert-danger');
 }
 
 function delete($conn) {
