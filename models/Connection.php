@@ -32,4 +32,8 @@ class Connection
 
         return self::$instance->conn;
     }
+
+    public static function destroy() {
+        self::$instance = null;
+    }
 }

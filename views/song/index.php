@@ -6,7 +6,7 @@
  * Time: 09:50 AM
  */
 
-require_once "../../database/conf.php";
+require_once "../../models/Utilities.php";
 require_once "../../models/Song.php";
 require_once "../../models/Album.php";
 
@@ -47,7 +47,7 @@ include_once "../layout/navbar.php";
                     <div class="6u 12u$(xsmall)">
                         <label for='debut' style="color: #1C1C1C">Año de debut:</label>
                         <select type="text" name="tipo" id="tipo" required>
-                            <?php if($_GET['id'] !== "") Album::select($conn, $rows['idalbumes']); else Album::select($conn, null); ?>
+                            <?php if($_GET['id'] !== "") Album::select($rows['idalbumes']); else Album::select(null); ?>
                         </select>
                     </div>
                     <div class="6u$ 12u$(xsmall)">

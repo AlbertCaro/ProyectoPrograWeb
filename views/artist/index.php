@@ -1,6 +1,6 @@
 <?php
 
-require_once "../../database/conf.php";
+require_once "../../models/Utilities.php";
 require_once "../../models/Artist.php";
 
 $title = "Agregar artista";

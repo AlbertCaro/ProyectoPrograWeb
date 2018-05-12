@@ -6,7 +6,7 @@
  * Time: 01:10 PM
  */
 
-require_once "../database/conf.php";
+require_once "../models/Utilities.php";
 require_once "../models/Label.php";
 
 $function = $_POST['func'];
@@ -21,23 +21,23 @@ function table() {
 function save() {
     $label = createLabel();
     if ($label -> save()) {
-        sweetMessage('Guardado correctamente',
+        Utilities::sweetMessage('Guardado correctamente',
             'Se ha guardado la disquera con éxito.',
             'success',
             'all');
     } else
-        message('No se ha podido guardar la disquera', 'alert alert-danger');
+        Utilities::message('No se ha podido guardar la disquera', 'alert alert-danger');
 }
 
 function update() {
     $label = createLabel();
     if ($label -> update($_POST['id'])) {
-        sweetMessage('Actualizado correctamente',
+        Utilities::sweetMessage('Actualizado correctamente',
             'Se ha actualizado la disquera con éxito.',
             'success',
             'all');
     } else
-        message('No se ha podido actualizar la disquera o no se realizaron cambios.', 'alert alert-danger');
+        Utilities::message('No se ha podido actualizar la disquera o no se realizaron cambios.', 'alert alert-danger');
 }
 
 function delete() {

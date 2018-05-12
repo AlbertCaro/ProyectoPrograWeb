@@ -19,7 +19,7 @@ session_start();
                 <span><strong>Tipo:</strong> <?php echo $row['tipo']; ?></span>
             </div>
             <div class='12u$'>
-                <span><strong>Publicación:</strong> <?php echo deformatDate($row['publicacion']); ?></span>
+                <span><strong>Publicación:</strong> <?php echo Utilities::deformatDate($row['publicacion']); ?></span>
             </div>
             <div class='12u$'>
                 <span><strong>Artista:</strong> <?php echo $row['artista']; ?></span>

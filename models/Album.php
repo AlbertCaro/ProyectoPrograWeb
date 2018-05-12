@@ -6,6 +6,7 @@
  * Time: 08:26 AM
  */
 
+require_once "Utilities.php";
 require_once "Connection.php";
 
 class Album
@@ -43,7 +44,7 @@ class Album
         $sql = "UPDATE albumes SET
         titulo='{$this->titulo}',
         tipo='{$this->tipo}', 
-        publicacion='".formatDate($this->publicacion)."', 
+        publicacion='".Utilities::formatDate($this->publicacion)."', 
         descripcion='{$this->descripcion}',
         idartistas='{$this->artista}',
         iddisqueras='{$this->disquera}'

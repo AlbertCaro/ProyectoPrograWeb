@@ -6,27 +6,27 @@
  * Time: 01:08 PM
  */
 
-require_once "../database/conf.php";
+require_once "../models/Utilities.php";
 
 $function = $_POST['func'];
-$function($conn);
+$function();
 
-function table($conn) {
-
-}
-
-function detail($conn) {
+function table() {
 
 }
 
-function save($conn) {
+function detail() {
 
 }
 
-function update($conn) {
+function save() {
 
 }
 
-function delete($conn) {
+function update() {
+
+}
+
+function delete() {
 
 }

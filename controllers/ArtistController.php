@@ -6,7 +6,7 @@
  * Time: 01:05 AM
  */
 
-require_once "../database/conf.php";
+require_once "../models/Utilities.php";
 require_once "../models/Artist.php";
 
 if (isset($_GET['func']))
@@ -33,23 +33,23 @@ function detail() {
 function save() {
     $artist = new Artist($_POST['nombre'], $_POST['descripcion'], $_POST['pais'], $_POST['debut'], $_POST['retiro']);
     if ($artist -> save()) {
-        sweetMessage('Guardado correctamente',
+        Utilities::sweetMessage('Guardado correctamente',
             'Se ha guardado el artista con éxito.',
             'success',
             'all');
     } else
-        message('No se ha podido guardar el artista.', 'alert alert-danger');
+        Utilities::message('No se ha podido guardar el artista.', 'alert alert-danger');
 }
 
 function update() {
     $artist = new Artist($_POST['nombre'], $_POST['descripcion'], $_POST['pais'], $_POST['debut'], $_POST['retiro']);
     if ($artist->update($_POST['id'])) {
-        sweetMessage('Actualizado correctamente',
+        Utilities::sweetMessage('Actualizado correctamente',
             'Se ha actualizado el artista con éxito.',
             'success',
             'all');
     } else
-        message('No se ha podido artista el artista o no se realizaron cambios.', 'alert alert-danger');
+        Utilities::message('No se ha podido artista el artista o no se realizaron cambios.', 'alert alert-danger');
 }
 
 function delete() {

@@ -6,7 +6,7 @@
  * Time: 01:07 PM
  */
 
-require_once "../database/conf.php";
+require_once "../models/Utilities.php";
 require_once "../models/Album.php";
 
 $function = $_POST['func'];
@@ -27,24 +27,24 @@ function save() {
     $album = createAlbum();
 
     if ($album->save()) {
-        sweetMessage('Guardado correctamente',
+        Utilities::sweetMessage('Guardado correctamente',
             'Se ha guardado el artista con éxito.',
             'success',
             'all');
     } else
-        message('No se ha podido guardar el album.', 'alert alert-danger');
+        Utilities::message('No se ha podido guardar el album.', 'alert alert-danger');
 }
 
 function update() {
     $album = createAlbum();
 
     if ($album->update($_POST['id'])) {
-        sweetMessage('Actualizado correctamente',
+        Utilities::sweetMessage('Actualizado correctamente',
             'Se ha actualizado el artista con éxito.',
             'success',
             'all');
     } else
-        message('No se ha podido actualizar el album o no ha introducido cambios.', 'alert alert-danger');
+        Utilities::message('No se ha podido actualizar el album o no ha introducido cambios.', 'alert alert-danger');
 }
 
 function delete() {

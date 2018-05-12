@@ -17,7 +17,7 @@ if ($count != 0) {
                 </a>
             </td>
             <td>{$row['titulo']}</td>
-            <td>".deformatDate($row['publicacion'])."</td>
+            <td>".Utilities::deformatDate($row['publicacion'])."</td>
         </tr>
         <tr id='detail_{$row['idalbumes']}'>
         </tr>";

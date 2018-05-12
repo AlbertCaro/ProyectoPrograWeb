@@ -6,7 +6,7 @@
  * Time: 01:05 AM
  */
 
-require_once "../database/conf.php";
+require_once "../models/Utilities.php";
 require_once "../models/User.php";
 
 $function = $_POST['func'];
@@ -30,16 +30,16 @@ function save() {
     if (!$user -> find()) {
         if ($user -> comparePassword($_POST['pass_conf'])) {
             if ($user -> save()) {
-                sweetMessage('Guardado correctamente',
+                Utilities::sweetMessage('Guardado correctamente',
                     'Se ha guardado el usuario con éxito.',
                     'success',
                     'all');
             } else
-                message('No se ha podido guardar el usuario.', 'alert alert-danger');
+                Utilities::message('No se ha podido guardar el usuario.', 'alert alert-danger');
         } else
-            message('Las contraseñas no coinciden.', 'alert alert-danger');
+            Utilities::message('Las contraseñas no coinciden.', 'alert alert-danger');
     } else
-        message('El nombre de usuario ingresado ya existe.', 'alert alert-danger');
+        Utilities::message('El nombre de usuario ingresado ya existe.', 'alert alert-danger');
 }
 
 function update() {
@@ -47,14 +47,14 @@ function update() {
 
     if ($user ->comparePassword($_POST['pass_conf'])) {
         if ($user -> update($_POST['id'])) {
-            sweetMessage('Actualizado correctamente',
+            Utilities::sweetMessage('Actualizado correctamente',
                 'Se ha actualizado el artista con éxito.',
                 'success',
                 'all');
         } else
-            message('No se ha podido actualizar el usuario o no se han realizado cambios.', 'alert alert-danger');
+            Utilities::message('No se ha podido actualizar el usuario o no se han realizado cambios.', 'alert alert-danger');
     } else
-        message('Las contraseñas no coinciden.','alert alert-danger');
+        Utilities::message('Las contraseñas no coinciden.','alert alert-danger');
 }
 
 function delete() {

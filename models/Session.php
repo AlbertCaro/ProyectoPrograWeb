@@ -6,9 +6,11 @@
  * Time: 12:19 PM
  */
 
+require_once "Connection.php";
+
 class Session
 {
-    private $conn, $usuario, $contrasenia;
+    private $usuario, $contrasenia;
 
     /**
      * Session constructor.
@@ -16,23 +18,22 @@ class Session
      * @param $usuario
      * @param $contrasenia
      */
-    public function __construct($conn, $usuario, $contrasenia)
+    public function __construct($usuario, $contrasenia)
     {
-        $this->conn = $conn;
         $this->usuario = (String) $usuario;
         $this->contrasenia = (String) md5($contrasenia);
     }
 
     public function verifyCredentials() {
-        return ($this->query()->rowCount()) !== 0;
+        return ($this->query() -> rowCount()) !== 0;
     }
 
     public function get() {
-        return ($this->query()->fetchAll())[0];
+        return ($this->query() -> fetchAll())[0];
     }
 
     private function query() {
         $sql = "SELECT * FROM usuarios WHERE pass = '{$this->contrasenia}' AND usuario = '{$this->usuario}'";
-        return $this->conn->query($sql);
+        return Connection::get() -> query($sql);
     }
 }
