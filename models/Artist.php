@@ -6,27 +6,27 @@
  * Time: 09:15 AM
  */
 
+require_once "Connection.php";
+
 class Artist
 {
-    private $conn, $nombre, $descripcion, $pais, $debut, $retiro;
+    private $nombre, $descripcion, $pais, $debut, $retiro;
 
     /**
      * Artist constructor.
-     * @param $conn
      * @param $nombre
      * @param $descripcion
      * @param $pais
      * @param $debut
      * @param $retiro
      */
-    public function __construct($conn, $nombre, $descripcion, $pais, $debut, $retiro)
+    public function __construct($nombre, $descripcion, $pais, $debut, $retiro)
     {
-        $this->conn = $conn;
-        $this->nombre = $nombre;
-        $this->descripcion = $descripcion;
-        $this->pais = $pais;
-        $this->debut = $debut;
-        $this->retiro = $retiro;
+        $this->nombre = (String) $nombre;
+        $this->descripcion = (String) $descripcion;
+        $this->pais = (String) $pais;
+        $this->debut = (int) $debut;
+        $this->retiro = (int) $retiro;
     }
 
 
@@ -39,7 +39,7 @@ class Artist
         if ($this->retiro)
             $sql.=", '{$this->retiro}'";
         $sql.=")";
-        return $this->conn->exec($sql);
+        return Connection::get()->exec($sql);
     }
 
     public function update($id) {
@@ -52,21 +52,21 @@ class Artist
             $sql.="retiro='{$this->retiro}', ";
 
         $sql.="descripcion='{$this->descripcion}' WHERE idartistas={$id}";
-        return $this->conn->exec($sql);
+        return Connection::get()->exec($sql);
     }
 
-    public function delete($conn, $id) {
+    public static function delete($id) {
         $sql = "DELETE FROM artistas WHERE idartistas = {$id}";
-        return $conn->exec($sql);
+        return Connection::get()->exec($sql);
     }
 
-    public function get($conn, $id) {
+    public static function get($id) {
         $sql = "SELECT * FROM artistas WHERE idartistas = {$id}";
-        return ($conn -> query($sql))->fetchAll()[0];
+        return (Connection::get() -> query($sql))->fetchAll()[0];
     }
 
-    public function search($conn, $search) {
+    public static function search($search) {
         $sql = "SELECT * FROM artistas WHERE nombre LIKE '%{$search}%' OR pais LIKE '%{$search}%' OR debut LIKE '%{$search}%'";
-        return $conn -> query($sql);
+        return Connection::get() -> query($sql);
     }
 }

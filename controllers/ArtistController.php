@@ -13,16 +13,16 @@ if (isset($_GET['func']))
     $function = $_GET['func'];
 else
     $function = $_POST['func'];
-$function($conn);
+$function();
 
-function table($conn) {
-    $res = Artist::search($conn, $_POST['search']);
+function table() {
+    $res = Artist::search($_POST['search']);
     $count = $res -> rowCount();
     require_once "../views/artist/row.php";
 }
 
-function detail($conn) {
-    $row = Artist::get($conn, $_POST['id']);
+function detail() {
+    $row = Artist::get($_POST['id']);
 
     if ($row['retiro'] === null)
         $row['retiro'] = "No se ha retirado.";
@@ -30,8 +30,8 @@ function detail($conn) {
     require_once "../views/artist/detail.php";
 }
 
-function save($conn) {
-    $artist = new Artist($conn, $_POST['nombre'], $_POST['descripcion'], $_POST['pais'], $_POST['debut'], $_POST['retiro']);
+function save() {
+    $artist = new Artist($_POST['nombre'], $_POST['descripcion'], $_POST['pais'], $_POST['debut'], $_POST['retiro']);
     if ($artist -> save()) {
         sweetMessage('Guardado correctamente',
             'Se ha guardado el artista con éxito.',
@@ -41,8 +41,8 @@ function save($conn) {
         message('No se ha podido guardar el artista.', 'alert alert-danger');
 }
 
-function update($conn) {
-    $artist = new Artist($conn, $_POST['nombre'], $_POST['descripcion'], $_POST['pais'], $_POST['debut'], $_POST['retiro']);
+function update() {
+    $artist = new Artist($_POST['nombre'], $_POST['descripcion'], $_POST['pais'], $_POST['debut'], $_POST['retiro']);
     if ($artist->update($_POST['id'])) {
         sweetMessage('Actualizado correctamente',
             'Se ha actualizado el artista con éxito.',
@@ -52,10 +52,10 @@ function update($conn) {
         message('No se ha podido artista el artista o no se realizaron cambios.', 'alert alert-danger');
 }
 
-function delete($conn) {
-    echo Artist::delete($conn, $_POST['id']);
+function delete() {
+    echo Artist::delete($_POST['id']);
 }
 
-function createArtist($conn) {
-    return new Artist($conn, $_POST['nombre'], $_POST['descripcion'], $_POST['pais'], $_POST['debut'], $_POST['retiro']);
+function createArtist() {
+    return new Artist($_POST['nombre'], $_POST['descripcion'], $_POST['pais'], $_POST['debut'], $_POST['retiro']);
 }

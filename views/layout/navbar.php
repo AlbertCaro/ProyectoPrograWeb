@@ -28,6 +28,7 @@ if (count($array) > 3)
     <link href="<?php echo $dots ?>assets/css/jquery-ui.min.css">
     <link href="<?php echo $dots ?>assets/css/bootstrap.min.css" rel="stylesheet">
     <link href="<?php echo $dots ?>assets/css/bootstrap-datepicker3.min.css" rel="stylesheet">
+    <link href="<?php echo $dots ?>assets/css/bootstrap-duration-picker.css" rel="stylesheet">
     <link rel="stylesheet" href="<?php echo $dots ?>assets/css/main.css" />
     <script src="<?php echo $dots ?>assets/js/functions.js"></script>
     <script src="<?php echo $dots ?>assets/js/node_modules/sweetalert2/dist/sweetalert2.all.js"></script>
@@ -43,6 +44,7 @@ if (count($array) > 3)
     <script src="<?php echo $dots ?>assets/js/node_modules/jquery-validation/dist/additional-methods.js"></script>
     <script src="<?php echo $dots ?>assets/js/countrypicker.js"></script>
     <script src="<?php echo $dots ?>assets/js/countrypicker.min.js"></script>
+    <script src="<?php echo $dots ?>assets/js/bootstrap-duration-picker.js"></script>
 </head>
 <body>
 

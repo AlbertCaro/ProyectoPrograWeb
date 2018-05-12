@@ -6,9 +6,11 @@
  * Time: 12:19 PM
  */
 
+require_once "Connection.php";
+
 class User
 {
-    private $conn, $usuario, $nombre, $apaterno, $amaterno, $pass, $rol;
+    private $usuario, $nombre, $apaterno, $amaterno, $pass, $rol;
 
     /**
      * User constructor.
@@ -20,22 +22,21 @@ class User
      * @param $pass
      * @param $rol
      */
-    public function __construct($conn, $usuario, $nombre, $apaterno, $amaterno, $pass, $rol)
+    public function __construct($usuario, $nombre, $apaterno, $amaterno, $pass, $rol)
     {
-        $this->conn = $conn;
-        $this->usuario = $usuario;
-        $this->nombre = $nombre;
-        $this->apaterno = $apaterno;
-        $this->amaterno = $amaterno;
-        $this->pass = $pass;
+        $this->usuario = (String) $usuario;
+        $this->nombre = (String) $nombre;
+        $this->apaterno = (String) $apaterno;
+        $this->amaterno = (String) $amaterno;
+        $this->pass = (String) md5($pass);
         $this->rol = $rol;
     }
 
 
     public function save() {
         $sql = "INSERT INTO usuarios (usuario, pass, nombre, apaterno, amaterno, rol)
-               VALUES ('{$this->usuario}', MD5('{$this->pass}'), '{$this->nombre}', '{$this->apaterno}', '{$this->amaterno}', 'normal')";
-        return $this->conn->exec($sql);
+               VALUES ('{$this->usuario}', '{$this->pass}', '{$this->nombre}', '{$this->apaterno}', '{$this->amaterno}', 'normal')";
+        return Connection::get() -> exec($sql);
     }
 
     public function update() {
@@ -44,10 +45,10 @@ class User
                 apaterno = '{$this->apaterno}',
                 amaterno = '{$this->amaterno}'";
         if ($this->pass !== "")
-            $sql .= ", pass = MD5('{$this->pass}')";
+            $sql .= ", pass = '{$this->pass}'";
         $sql .= " WHERE usuario = '{$this->usuario}'";
 
-        return $this->conn->exec($sql);
+        return Connection::get() -> exec($sql);
     }
 
     public function comparePassword($pass_conf) {
@@ -56,22 +57,22 @@ class User
 
     public function find() {
         $sql = "SELECT * FROM usuarios WHERE usuario = '{$this->usuario}'";
-        return $this -> conn -> query($sql) -> rowCount();
+        return Connection::get() -> query($sql) -> rowCount();
     }
 
-    public function delete($conn, $id) {
+    public static function delete($id) {
         $sql = "DELETE FROM usuarios WHERE idusuarios = {$id}";
-        echo $conn -> exec($sql);
+        echo Connection::get() -> exec($sql);
     }
 
-    public function get($conn, $id) {
+    public static function get($id) {
         $sql = "SELECT * FROM usuarios WHERE idusuarios = {$id}";
-        return ($conn -> query($sql)) -> fetchAll()[0];
+        return (Connection::get() -> query($sql)) -> fetchAll()[0];
     }
 
-    public function search($conn, $search) {
+    public static function search($search) {
         $sql = "SELECT idusuarios, usuario, CONCAT(nombre, ' ', apaterno, ' ', amaterno) as nombreCompleto FROM
 usuarios WHERE usuario LIKE '%{$search}%' OR CONCAT(nombre, ' ', apaterno, ' ', amaterno) LIKE '%{$search}%'";
-        return $conn -> query($sql);
+        return Connection::get() -> query($sql);
     }
 }

@@ -10,16 +10,16 @@ require_once "../database/conf.php";
 require_once "../models/Genre.php";
 
 $function = $_POST['func'];
-$function($conn);
+$function();
 
-function table($conn) {
-    $res = Genre::search($conn, $_POST['search']);
+function table() {
+    $res = Genre::search($_POST['search']);
     $count = $res -> rowCount();
     require_once "../views/genre/row.php";
 }
 
-function save($conn) {
-    $genre = createGenre($conn);
+function save() {
+    $genre = createGenre();
 
     if ($genre -> save()) {
         sweetMessage('Guardado correctamente',
@@ -30,8 +30,8 @@ function save($conn) {
         message('No se ha podido guardar el género', 'alert alert-danger');
 }
 
-function update($conn) {
-    $genre = createGenre($conn);
+function update() {
+    $genre = createGenre();
 
     if ($genre -> update($_POST['id'])) {
         sweetMessage('Actualizado correctamente',
@@ -42,10 +42,10 @@ function update($conn) {
         message('No se ha podido actualizar el género o no se realizaron cambios.', 'alert alert-danger');
 }
 
-function delete($conn) {
-    echo Genre::delete($conn, $_POST['id']);
+function delete() {
+    echo Genre::delete($_POST['id']);
 }
 
-function createGenre($conn) {
-    return new Genre($conn, $_POST['nombre']);
+function createGenre() {
+    return new Genre($_POST['nombre']);
 }

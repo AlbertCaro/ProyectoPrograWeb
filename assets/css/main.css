@@ -48,7 +48,7 @@ body {
 	-webkit-text-size-adjust: none;
 }
 
-/* Box Model */
+/* Box Connection */
 
 *, *:before, *:after {
 	-moz-box-sizing: border-box;

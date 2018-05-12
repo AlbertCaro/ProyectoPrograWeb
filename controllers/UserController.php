@@ -10,22 +10,23 @@ require_once "../database/conf.php";
 require_once "../models/User.php";
 
 $function = $_POST['func'];
-$function($conn);
+$function();
 
-function table($conn) {
-    $res = User::search($conn, $_POST['search']);
+function table() {
+    $res = User::search($_POST['search']);
     $count = $res -> rowCount();
     echo $count;
     require_once "../views/user/row.php";
 }
 
-function detail($conn) {
-    $row = User::get($conn, $_POST['id']);
+function detail() {
+    $row = User::get($_POST['id']);
     require_once "../views/user/detail.php";
 }
 
-function save($conn) {
-    $user = createUser($conn);
+function save() {
+    $user = createUser();
+
     if (!$user -> find()) {
         if ($user -> comparePassword($_POST['pass_conf'])) {
             if ($user -> save()) {
@@ -41,10 +42,11 @@ function save($conn) {
         message('El nombre de usuario ingresado ya existe.', 'alert alert-danger');
 }
 
-function update($conn) {
-    $user = createUser($conn);
+function update() {
+    $user = createUser();
+
     if ($user ->comparePassword($_POST['pass_conf'])) {
-        if ($user -> update()) {
+        if ($user -> update($_POST['id'])) {
             sweetMessage('Actualizado correctamente',
                 'Se ha actualizado el artista con éxito.',
                 'success',
@@ -55,10 +57,10 @@ function update($conn) {
         message('Las contraseñas no coinciden.','alert alert-danger');
 }
 
-function delete($conn) {
-    echo User::delete($conn, $_POST['id']);
+function delete() {
+    echo User::delete($_POST['id']);
 }
 
-function createUser($conn) {
-    return new User($conn, $_POST['user'], $_POST['nombre'], $_POST['apaterno'], $_POST['amaterno'], $_POST['pass'], 'normal');
+function createUser() {
+    return new User($_POST['user'], $_POST['nombre'], $_POST['apaterno'], $_POST['amaterno'], $_POST['pass'], 'normal');
 }

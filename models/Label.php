@@ -6,9 +6,11 @@
  * Time: 12:18 PM
  */
 
+require_once "Connection.php";
+
 class Label
 {
-    private $conn, $nombre, $fundacion, $pais;
+    private $nombre, $fundacion, $pais;
 
     /**
      * Label constructor.
@@ -17,37 +19,36 @@ class Label
      * @param $fundacion
      * @param $pais
      */
-    public function __construct($conn, $nombre, $fundacion, $pais)
+    public function __construct($nombre, $fundacion, $pais)
     {
-        $this->conn = $conn;
-        $this->nombre = $nombre;
-        $this->fundacion = $fundacion;
-        $this->pais = $pais;
+        $this->nombre = (String) $nombre;
+        $this->fundacion = (int) $fundacion;
+        $this->pais = (String) $pais;
     }
 
     public function save() {
         $sql = "INSERT INTO disqueras (nombre, fundacion, pais) VALUES ('{$this->nombre}', '{$this->fundacion}', '{$this->pais}')";
-        return $this->conn->exec($sql);
+        return Connection::get() -> exec($sql);
     }
 
     public function update($id) {
         $sql = "UPDATE disqueras SET nombre='{$this->nombre}', fundacion='{$this->fundacion}', pais='{$this->pais}' WHERE iddisqueras={$id}";
-        return $this->conn->exec($sql);
+        return Connection::get() -> exec($sql);
     }
 
-    public function delete($conn, $id) {
+    public static function delete($id) {
         $sql = "DELETE FROM disqueras WHERE iddisqueras = {$id}";
-        return $conn -> exec($sql);
+        return Connection::get() -> exec($sql);
     }
 
-    public function search($conn, $search) {
+    public static function search($search) {
         $sql = "SELECT * FROM disqueras WHERE nombre LIKE '%{$search}%' OR fundacion LIKE '%{$search}%'
               OR pais LIKE '{$search}'";
-        return $conn -> query($sql);
+        return Connection::get() -> query($sql);
     }
 
-    public function get($conn, $id) {
+    public static function get($id) {
         $sql = "SELECT * FROM disqueras WHERE iddisqueras = {$id}";
-        return ($conn -> query($sql) -> fetchAll())[0];
+        return (Connection::get() -> query($sql) -> fetchAll())[0];
     }
 }

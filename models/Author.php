@@ -6,47 +6,47 @@
  * Time: 12:18 PM
  */
 
+require_once "Connection.php";
+
 class Author
 {
-    private $conn, $nombre, $apaterno, $amaterno;
+    private $nombre, $apaterno, $amaterno;
 
     /**
      * Author constructor.
-     * @param $conn
      * @param $nombre
      * @param $apaterno
      * @param $amaterno
      */
-    public function __construct($conn, $nombre, $apaterno, $amaterno)
+    public function __construct($nombre, $apaterno, $amaterno)
     {
-        $this->conn = $conn;
-        $this->nombre = $nombre;
-        $this->apaterno = $apaterno;
-        $this->amaterno = $amaterno;
+        $this->nombre = (String) $nombre;
+        $this->apaterno = (String) $apaterno;
+        $this->amaterno = (String) $amaterno;
     }
 
     public function save() {
         $sql = "INSERT INTO autores (nombre, apaterno, amaterno) VALUES ('{$this->nombre}', '{$this->apaterno}', '{$this->amaterno}')";
-        return $this->conn->exec($sql);
+        return Connection::get()->exec($sql);
     }
 
     public function update($id) {
         $sql = "UPDATE autores SET nombre='{$this->nombre}', apaterno='{$this->apaterno}', amaterno='{$this->amaterno}' WHERE idautores = {$id}";
-        return $this->conn->exec($sql);
+        return Connection::get()->exec($sql);
     }
 
-    public function delete($conn, $id) {
+    public static function delete($id) {
         $sql = "DELETE FROM autores WHERE idautores = {$id}";
-        return $conn -> exec($sql);
+        return Connection::get() -> exec($sql);
     }
 
-    public function get($conn, $id) {
+    public static function get($id) {
         $sql = "SELECT * FROM autores WHERE idautores = {$id}";
-        return ($conn -> query($sql) -> fetchAll())[0];
+        return (Connection::get() -> query($sql) -> fetchAll())[0];
     }
 
-    public function search($conn, $search) {
+    public static function search($search) {
         $sql = "SELECT * FROM autores WHERE CONCAT(nombre,' ',apaterno,' ',amaterno) LIKE '%{$search}%'";
-        return $conn -> query($sql);
+        return Connection::get() -> query($sql);
     }
 }

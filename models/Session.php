@@ -19,8 +19,8 @@ class Session
     public function __construct($conn, $usuario, $contrasenia)
     {
         $this->conn = $conn;
-        $this->usuario = $usuario;
-        $this->contrasenia = md5($contrasenia);
+        $this->usuario = (String) $usuario;
+        $this->contrasenia = (String) md5($contrasenia);
     }
 
     public function verifyCredentials() {

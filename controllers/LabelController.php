@@ -10,16 +10,16 @@ require_once "../database/conf.php";
 require_once "../models/Label.php";
 
 $function = $_POST['func'];
-$function($conn);
+$function();
 
-function table($conn) {
-    $res = Label::search($conn, $_POST['search']);
+function table() {
+    $res = Label::search($_POST['search']);
     $count = $res -> rowCount();
     require_once "../views/label/row.php";
 }
 
-function save($conn) {
-    $label = createLabel($conn);
+function save() {
+    $label = createLabel();
     if ($label -> save()) {
         sweetMessage('Guardado correctamente',
             'Se ha guardado la disquera con éxito.',
@@ -29,8 +29,8 @@ function save($conn) {
         message('No se ha podido guardar la disquera', 'alert alert-danger');
 }
 
-function update($conn) {
-    $label = createLabel($conn);
+function update() {
+    $label = createLabel();
     if ($label -> update($_POST['id'])) {
         sweetMessage('Actualizado correctamente',
             'Se ha actualizado la disquera con éxito.',
@@ -40,10 +40,10 @@ function update($conn) {
         message('No se ha podido actualizar la disquera o no se realizaron cambios.', 'alert alert-danger');
 }
 
-function delete($conn) {
-    echo Label::delete($conn, $_POST['id']);
+function delete() {
+    echo Label::delete($_POST['id']);
 }
 
-function createLabel($conn) {
-    return new Label($conn, $_POST['nombre'], $_POST['fundacion'], $_POST['pais']);
+function createLabel() {
+    return new Label($_POST['nombre'], $_POST['fundacion'], $_POST['pais']);
 }

@@ -9,7 +9,7 @@ include_once "../layout/session_valid.php";
 include_once "../layout/session_roles.php";
 
 if ($_GET['id'] !== "") {
-    $rows = Artist::get($conn, $_GET['id']);
+    $rows = Artist::get($_GET['id']);
     $title = "Editar artista";
 }
 
@@ -93,11 +93,11 @@ include_once "../layout/navbar.php";
                 "retiro" : $('#retiro').val(),
                 "descripcion" : $('#descripcion').val(),
                 "func" : '<?php if ($_GET['id'] !== "") echo "update"; else echo "save"?>'
-                }, 'controller/');
-            }, invalidHandler: function () {
-                emptyForm()
-            }
-        });
-    </script>
-    <?php include_once "../layout/footer.php"; ?>
+            }, 'controller/');
+        }, invalidHandler: function () {
+            emptyForm()
+        }
+    });
+</script>
+<?php include_once "../layout/footer.php"; ?>
 

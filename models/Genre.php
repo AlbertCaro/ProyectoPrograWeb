@@ -6,43 +6,44 @@
  * Time: 12:18 PM
  */
 
+require_once "Connection.php";
+
 class Genre
 {
-    private $conn, $nombre;
+    private $nombre;
 
     /**
      * Genre constructor.
      * @param $conn
      * @param $nombre
      */
-    public function __construct($conn, $nombre)
+    public function __construct($nombre)
     {
-        $this->conn = $conn;
-        $this->nombre = $nombre;
+        $this->nombre = (String) $nombre;
     }
 
     public function save() {
         $sql = "INSERT INTO generos (nombre) VALUES ('{$this->nombre}')";
-        return $this -> conn -> exec($sql);
+        return Connection::get() -> exec($sql);
     }
 
     public function update($id) {
         $sql = "UPDATE generos SET nombre = '{$this->nombre}' WHERE idgeneros = {$id}";
-        return $this -> conn -> exec($sql);
+        return Connection::get() -> exec($sql);
     }
 
-    public function delete($conn, $id) {
+    public static function delete($id) {
         $sql = "DELETE FROM generos WHERE idgeneros = {$id}";
-        return $conn -> exec($sql);
+        return Connection::get() -> exec($sql);
     }
 
-    public function search($conn, $search) {
+    public static function search($search) {
         $sql = "SELECT * FROM generos WHERE nombre LIKE '%{$search}%'";
-        return $conn -> query($sql);
+        return Connection::get() -> query($sql);
     }
 
-    public function get($conn, $id) {
+    public static function get($id) {
         $sql = "SELECT * FROM generos WHERE idgeneros = {$id}";
-        return ($conn -> query($sql) -> fetchAll())[0];
+        return (Connection::get() -> query($sql) -> fetchAll())[0];
     }
 }

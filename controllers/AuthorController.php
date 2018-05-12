@@ -10,16 +10,16 @@ require_once "../database/conf.php";
 require_once "../models/Author.php";
 
 $function = $_POST['func'];
-$function($conn);
+$function();
 
-function table($conn) {
-    $res = Author::search($conn, $_POST['search']);
+function table() {
+    $res = Author::search($_POST['search']);
     $count = $res -> rowCount();
     require_once '../views/author/row.php';
 }
 
-function save($conn) {
-    $author = createAuthor($conn);
+function save() {
+    $author = createAuthor();
 
     if ($author->save()) {
         sweetMessage('Guardado correctamente',
@@ -30,8 +30,8 @@ function save($conn) {
         message('No se ha podido guardar el autor.', 'alert alert-danger');
 }
 
-function update($conn) {
-    $author = createAuthor($conn);
+function update() {
+    $author = createAuthor();
 
     if ($author->update($_POST['id'])) {
         sweetMessage('Actualizado correctamente',
@@ -42,10 +42,10 @@ function update($conn) {
         message('No se ha podido actualizar el autor o no se realizaron cambios.', 'alert alert-danger');
 }
 
-function delete($conn) {
-    echo Author::delete($conn, $_POST['id']);
+function delete() {
+    echo Author::delete($_POST['id']);
 }
 
-function createAuthor($conn) {
-    return new Author($conn, $_POST['nombre'], $_POST['apaterno'], $_POST['amaterno']);
+function createAuthor() {
+    return new Author($_POST['nombre'], $_POST['apaterno'], $_POST['amaterno']);
 }

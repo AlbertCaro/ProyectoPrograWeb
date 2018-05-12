@@ -10,21 +10,21 @@ require_once "../database/conf.php";
 require_once "../models/Album.php";
 
 $function = $_POST['func'];
-$function($conn);
+$function();
 
-function table($conn) {
-    $res = Album::search($conn, $_POST['search']);
+function table() {
+    $res = Album::search($_POST['search']);
     $count = $res -> rowCount();
     require_once "../views/album/row.php";
 }
 
-function detail($conn) {
-    $row = Album::get($conn, $_POST['id']);
+function detail() {
+    $row = Album::get($_POST['id']);
     require_once "../views/album/detail.php";
 }
 
-function save($conn) {
-    $album = createAlbum($conn);
+function save() {
+    $album = createAlbum();
 
     if ($album->save()) {
         sweetMessage('Guardado correctamente',
@@ -35,8 +35,8 @@ function save($conn) {
         message('No se ha podido guardar el album.', 'alert alert-danger');
 }
 
-function update($conn) {
-    $album = createAlbum($conn);
+function update() {
+    $album = createAlbum();
 
     if ($album->update($_POST['id'])) {
         sweetMessage('Actualizado correctamente',
@@ -47,10 +47,10 @@ function update($conn) {
         message('No se ha podido actualizar el album o no ha introducido cambios.', 'alert alert-danger');
 }
 
-function delete($conn) {
-    echo Album::delete($conn, $_POST['id']);
+function delete() {
+    echo Album::delete($_POST['id']);
 }
 
-function createAlbum($conn) {
-    return new Album($conn, $_POST['titulo'], $_POST['tipo'], $_POST['publicacion'], $_POST['descripcion'], $_POST['disquera'], $_POST['artista']);
+function createAlbum() {
+    return new Album($_POST['titulo'], $_POST['tipo'], $_POST['publicacion'], $_POST['descripcion'], $_POST['disquera'], $_POST['artista']);
 }
