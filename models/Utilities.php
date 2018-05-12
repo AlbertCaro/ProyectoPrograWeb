@@ -39,17 +39,4 @@ trait Utilities {
     public static function deformatDate($date) {
         return date('d/m/Y', strtotime(str_replace('-', '/', $date)));
     }
-
-    public static function tableSelect($conn, $value, $table, $id) {
-        $sql = "SELECT * FROM {$table}";
-        $res = $conn -> query($sql);
-        $rows = $res -> fetchAll();
-        echo "<option value=''>- Seleccione una opción -</option>";
-        foreach ($rows as $row) {
-            echo "<option value='{$row[$id]}' ";
-            if ($row[$id] === $value)
-                echo "selected";
-            echo ">{$row['nombre']}</option>";
-        }
-    }
 }

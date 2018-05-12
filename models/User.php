@@ -52,7 +52,7 @@ class User
     }
 
     public function comparePassword($pass_conf) {
-        return $this->pass == $pass_conf;
+        return $this->pass == md5($pass_conf);
     }
 
     public function find() {

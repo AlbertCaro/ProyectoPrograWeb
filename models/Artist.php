@@ -69,4 +69,17 @@ class Artist
         $sql = "SELECT * FROM artistas WHERE nombre LIKE '%{$search}%' OR pais LIKE '%{$search}%' OR debut LIKE '%{$search}%'";
         return Connection::get() -> query($sql);
     }
+
+    public static function select($value) {
+        $sql = "SELECT * FROM artistas";
+        $res = Connection::get() -> query($sql);
+        $rows = $res -> fetchAll();
+        echo "<option value=''>- Seleccione una opción -</option>";
+        foreach ($rows as $row) {
+            echo "<option value='{$row['idartistas']}' ";
+            if ($row['idartistas'] === $value)
+                echo "selected";
+            echo ">{$row['nombre']}</option>";
+        }
+    }
 }

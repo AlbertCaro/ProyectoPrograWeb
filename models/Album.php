@@ -27,7 +27,7 @@ class Album
     {
         $this->titulo = (String) $titulo;
         $this->tipo = (String) $tipo;
-        $this->publicacion = (int) $publicacion;
+        $this->publicacion = Utilities::formatDate((String) $publicacion);
         $this->descripcion = (String) $descripcion;
         $this->disquera = (int) $disquera;
         $this->artista = (int) $artista;
@@ -36,7 +36,7 @@ class Album
 
     public function save() {
         $sql = "INSERT INTO albumes (titulo, tipo, publicacion, descripcion, iddisqueras, idartistas) VALUES 
-        ('{$this->titulo}', '{$this->tipo}', '".formatDate($this->publicacion)."', '{$this->descripcion}', {$this->disquera}, {$this->artista})";
+        ('{$this->titulo}', '{$this->tipo}', '{$this->publicacion}', '{$this->descripcion}', {$this->disquera}, {$this->artista})";
         return Connection::get() -> exec($sql);
     }
 
@@ -44,12 +44,11 @@ class Album
         $sql = "UPDATE albumes SET
         titulo='{$this->titulo}',
         tipo='{$this->tipo}', 
-        publicacion='".Utilities::formatDate($this->publicacion)."', 
+        publicacion='{$this->publicacion}', 
         descripcion='{$this->descripcion}',
         idartistas='{$this->artista}',
         iddisqueras='{$this->disquera}'
         WHERE idalbumes = {$id}";
-
         return Connection::get() -> exec($sql);
     }
 

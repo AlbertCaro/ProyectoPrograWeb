@@ -46,7 +46,7 @@ function update() {
     $user = createUser();
 
     if ($user ->comparePassword($_POST['pass_conf'])) {
-        if ($user -> update($_POST['id'])) {
+        if ($user -> update()) {
             Utilities::sweetMessage('Actualizado correctamente',
                 'Se ha actualizado el artista con éxito.',
                 'success',

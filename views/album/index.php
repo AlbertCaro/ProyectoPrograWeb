@@ -2,6 +2,7 @@
 
 require_once "../../models/Utilities.php";
 require_once "../../models/Album.php";
+require_once "../../models/Artist.php";
 
 $title = "Agregar album";
 
@@ -58,8 +59,8 @@ function typeOptions($selected) {
                         <label for="disquera" style="color: #1c1c1c">Disquera:</label>
                         <select type="text" name="disquera" id="disquera" required>
                             <?php
-                            if($_GET['id'] !== "") tableSelect($rows['iddisqueras'], 'disqueras', 'iddisqueras');
-                            else tableSelect(null, 'disqueras', 'iddisqueras');
+                            if($_GET['id'] !== "") Album::select($rows['iddisqueras']);
+                            else Album::select(null);
                             ?>
                         </select>
                     </div>
@@ -67,8 +68,8 @@ function typeOptions($selected) {
                         <label for="artista" style="color: #1c1c1c">Artista:</label>
                         <select type="text" name="artista" id="artista" required>
                             <?php
-                            if($_GET['id'] !== "") tableSelect($rows['idartistas'], 'artistas', 'idartistas');
-                            else tableSelect(null, 'artistas', 'idartistas');
+                            if($_GET['id'] !== "") Artist::select($rows['idartistas']);
+                            else Artist::select(null);
                             ?>
                         </select>
                     </div>

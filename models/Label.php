@@ -51,4 +51,17 @@ class Label
         $sql = "SELECT * FROM disqueras WHERE iddisqueras = {$id}";
         return (Connection::get() -> query($sql) -> fetchAll())[0];
     }
+
+    public static function select($value) {
+        $sql = "SELECT * FROM disqueras";
+        $res = Connection::get() -> query($sql);
+        $rows = $res -> fetchAll();
+        echo "<option value=''>- Seleccione una opción -</option>";
+        foreach ($rows as $row) {
+            echo "<option value='{$row['iddisqueras']}' ";
+            if ($row['iddisqueras'] === $value)
+                echo "selected";
+            echo ">{$row['nombre']}</option>";
+        }
+    }
 }
