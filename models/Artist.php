@@ -32,7 +32,7 @@ class Artist
 
     public function save() {
         $sql = "INSERT INTO artistas (nombre, descripcion, pais, debut";
-        if ($this->retiro !== "")
+        if ($this->retiro)
             $sql.= ", retiro";
         $sql.=") VALUES
                 ('{$this->nombre}', '{$this->descripcion}', '{$this->pais}', '{$this->debut}'";

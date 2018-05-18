@@ -3,6 +3,7 @@
 require_once "../../models/Utilities.php";
 require_once "../../models/Album.php";
 require_once "../../models/Artist.php";
+require_once "../../models/Label.php";
 
 $title = "Agregar album";
 
@@ -59,8 +60,8 @@ function typeOptions($selected) {
                         <label for="disquera" style="color: #1c1c1c">Disquera:</label>
                         <select type="text" name="disquera" id="disquera" required>
                             <?php
-                            if($_GET['id'] !== "") Album::select($rows['iddisqueras']);
-                            else Album::select(null);
+                            if($_GET['id'] !== "") Label::select($rows['iddisqueras']);
+                            else Label::select(null);
                             ?>
                         </select>
                     </div>

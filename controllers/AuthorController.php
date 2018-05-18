@@ -20,7 +20,6 @@ function table() {
 
 function save() {
     $author = createAuthor();
-
     if ($author->save()) {
         Utilities::sweetMessage('Guardado correctamente',
             'Se ha guardado el autor con éxito.',
@@ -32,7 +31,6 @@ function save() {
 
 function update() {
     $author = createAuthor();
-
     if ($author->update($_POST['id'])) {
         Utilities::sweetMessage('Actualizado correctamente',
             'Se ha actualizado el autor con éxito.',
@@ -49,3 +47,4 @@ function delete() {
 function createAuthor() {
     return new Author($_POST['nombre'], $_POST['apaterno'], $_POST['amaterno']);
 }
+

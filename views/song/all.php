@@ -6,6 +6,8 @@
  * Time: 09:51 AM
  */
 
+$title = "Canciones";
+
 include_once "../layout/session_valid.php";
 include_once "../layout/navbar.php";
 
@@ -18,13 +20,17 @@ include_once "../layout/navbar.php";
                 <p>Administrar canciones registrados.</p>
                 <?php include_once "../layout/search_form.php" ?>
             </header>
+            <div id="message">
+
+            </div>
             <table>
                 <thead>
                 <tr>
                     <th></th>
-                    <th>Nombre</th>
-                    <th>País</th>
-                    <th>Año de debut</th>
+                    <th>Título</th>
+                    <th>Artista</th>
+                    <th>Album</th>
+                    <th></th>
                 </tr>
                 </thead>
                 <tbody id="response" class="12u$">

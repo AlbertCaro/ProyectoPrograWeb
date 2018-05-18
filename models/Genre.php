@@ -46,4 +46,17 @@ class Genre
         $sql = "SELECT * FROM generos WHERE idgeneros = {$id}";
         return (Connection::get() -> query($sql) -> fetchAll())[0];
     }
+
+    public static function select($value) {
+        $sql = "SELECT * FROM generos";
+        $res = Connection::get() -> query($sql);
+        $rows = $res -> fetchAll();
+        echo "<option value=''>- Seleccione una opción -</option>";
+        foreach ($rows as $row) {
+            echo "<option value='{$row['idgeneros']}' ";
+            if ($row['idgeneros'] === $value)
+                echo "selected";
+            echo ">{$row['nombre']}</option>";
+        }
+    }
 }

@@ -4,11 +4,11 @@
 
     const defaults = {
       translations: {
-        day: 'day',
-        hour: 'hour',
-        minute: 'minute',
-        second: 'second',
-        days: 'days',
+        day: 'Día',
+        hour: 'Hora',
+        minute: 'Minuto',
+        second: 'Segundo',
+        days: 'Días',
         hours: 'Horas',
         minutes: 'Minutos',
         seconds: 'Segundos',

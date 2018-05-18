@@ -19,9 +19,13 @@ trait Utilities {
     swal(
         '{$title}',
         '{$menssage}',
-        '{$type}').then(function () { 
+        '{$type}')";
+        if (!is_null($location)) {
+            echo ".then(function () { 
             setTimeout(\"location . href = '$location'\", 0);
-         })
+         })";
+        }
+        echo "
     </script>";
     }
 
@@ -38,5 +42,14 @@ trait Utilities {
 
     public static function deformatDate($date) {
         return date('d/m/Y', strtotime(str_replace('-', '/', $date)));
+    }
+
+    public static function secondsToTime($seconds) {
+        return sprintf('%02d:%02d:%02d',floor($seconds/3600),floor($seconds/60 % 60),floor($seconds % 60));
+    }
+
+    public static function timeToSeconds($time) {
+        list($h, $m, $s) = explode(':', $time);
+        return ($h * 3600) + ($m * 60) + $s;
     }
 }

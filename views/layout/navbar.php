@@ -51,7 +51,7 @@ if (count($array) > 3)
 <!-- Header -->
 <header id="header">
     <div class="inner">
-        <a href="<?php echo $dots ?>" class="logo">Musical</a>
+        <a href="<?php echo $dots ?>" class="logo"><span class="icon fa-music"></span> Musical</a>
         <nav id="nav">
             <?php
             if(isset($_SESSION['valid'])) {

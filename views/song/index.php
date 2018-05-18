@@ -9,6 +9,8 @@
 require_once "../../models/Utilities.php";
 require_once "../../models/Song.php";
 require_once "../../models/Album.php";
+require_once "../../models/Genre.php";
+require_once "../../models/Author.php";
 
 $title = "Agregar canción";
 
@@ -35,31 +37,49 @@ include_once "../layout/navbar.php";
                 <div class="row uniform 50%">
                     <div class="9u 12u$(xsmall)">
                         <label for='nombre' style="color: #1C1C1C">Título:</label>
-                        <input type="text" name="nombre" id="nombre" value="<?php if ($_GET['id'] !== "") echo $rows['nombre'] ?>"
-                               placeholder="Nombre completo" required/>
-                        <?php if($_GET['id'] !== "") echo "<input type='hidden' name='id' id='id' value='{$rows['idartistas']}'>" ?>
+                        <input type="text" name="nombre" id="nombre" value="<?php if ($_GET['id'] !== "") echo $rows['titulo'] ?>"
+                               placeholder="Título de la canción" required/>
+                        <?php if($_GET['id'] !== "") echo "<input type='hidden' name='id' id='id' value='{$rows['idcanciones']}'>" ?>
                     </div>
                     <div class="3u$ 12u$(xsmall)">
                         <label for='pais' style="color: #1C1C1C">Duración:</label>
-                        <input type="text" name="duracion" id="duracion" value="<?php if ($_GET['id'] !== "") echo $rows['debut'] ?>"
+                        <input type="text" name="duracion" id="duracion" value="<?php if ($_GET['id'] !== "") echo Utilities::timeToSeconds($rows['duracion']) ?>"
                                placeholder="Año de debut" required/>
                     </div>
                     <div class="6u 12u$(xsmall)">
-                        <label for='debut' style="color: #1C1C1C">Año de debut:</label>
-                        <select type="text" name="tipo" id="tipo" required>
+                        <label for='album' style="color: #1C1C1C">Album:</label>
+                        <select type="text" name="album" id="album" required>
                             <?php if($_GET['id'] !== "") Album::select($rows['idalbumes']); else Album::select(null); ?>
                         </select>
                     </div>
                     <div class="6u$ 12u$(xsmall)">
-                        <label for='retiro' style="color: #1C1C1C">Año de retiro:</label>
-                        <input type="text" name="retiro" id="retiro" value="<?php if ($_GET['id'] !== "") echo $rows['retiro'] ?>"
-                               onclick="setYearSelect('retiro')" placeholder="Año de retiro" />
+                        <label for='genero' style="color: #1C1C1C">Género:</label>
+                        <select type="text" name="genero" id="genero" required>
+                            <?php if($_GET['id'] !== "") Genre::select($rows['idgeneros']); else Genre::select(null); ?>
+                        </select>
                     </div>
-                    <div class="12u$">
-                        <label for='descripcion' style="color: #1C1C1C">Descripción del artísta:</label>
-                        <textarea name="descripcion" id="descripcion" placeholder="Descripción..." rows="5" required><?php
-                            if ($_GET['id'] !== "") echo $rows['descripcion'] ?></textarea>
+                    <div class="12u">
+                        <label for='authors' style="color: #1C1C1C">Autores: </label>
+                        <div id="authors" class="row uniform">
+                            <?php
+
+                            if ($_GET['id'] !== "") {
+                                $authors = Song::getAuthors($rows['idcanciones'], false);
+                                $default = "true";
+                                $count = 0;
+                                foreach ($authors as $author) {
+                                    Author::select($author['idautores'], $count, $default);
+                                    $count++;
+                                    if ($default == "true")
+                                        $default = "false";
+                                }
+                            } else
+                                Author::select(null, 0, "true");
+
+                            ?>
+                        </div>
                     </div>
+                    <input type="hidden" id="authors-change" name="authors-change" value="">
                     <div id="response" align="center" class="12u$">
 
                     </div>
@@ -76,25 +96,26 @@ include_once "../layout/navbar.php";
 <script type="text/javascript">
     $("#duracion").durationPicker();
     $("#form").validate({
-        rules: {
-            retiro: "number"
-        }, messages: {
+        messages: {
             nombre: "Debe especificar el nombre",
-            pais: "Debe especificar el país",
-            debut: {
-                required: "Debe especificar el año de debut",
-                number: "No puede ingresar letras en un año"
-            }, retiro: {
-                number: "No puede ingresar letras en un año"
-            }, descripcion: "Debe añadir una descripción del artista"
+            duracion: "Debe especificar la duración",
+            album: "Debe especificar el album",
+            genero: "Debe especificar un género",
+            0 : 'Debe especificar por lo menos un autor'
         }, submitHandler: function () {
+            var authors = document.getElementsByName("autores[]");
+            var array = [];
+            for (var i = 0; i < authors.length; i++) {
+                array.push(authors[i].value);
+            }
             sendData({
                 <?php if ($_GET['id'] !== '') echo '"id" : $(\'#id\').val(),'?>
                 "nombre" : $('#nombre').val(),
-                "pais" : $('#pais').val(),
-                "debut" : $('#debut').val(),
-                "retiro" : $('#retiro').val(),
-                "descripcion" : $('#descripcion').val(),
+                "duracion" : $('#duracion').val(),
+                "album" : $('#album').val(),
+                "genero" : $('#genero').val(),
+                "autores" : array,
+                "autores-cambio" : $('#authors-change').val(),
                 "func" : '<?php if ($_GET['id'] !== "") echo "update"; else echo "save"?>'
             }, 'controller/');
         }, invalidHandler: function () {

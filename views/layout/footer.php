@@ -37,6 +37,6 @@
 </body>
 </html>
 <?php
-require_once "../{$dots}models/Connection.php";
+require_once "../../models/Connection.php";
 Connection::destroy();
 ?>

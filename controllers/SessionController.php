@@ -18,6 +18,7 @@ function signin() {
         $data = $session->get();
         session_start();
         $_SESSION['valid'] = true;
+        $_SESSION['id'] = $data['idusuarios'];
         $_SESSION['user'] = "{$data['nombre']} {$data['apaterno']} {$data['amaterno']}";
         $_SESSION['role'] = $data['rol'];
         Utilities::sweetMessage("Se ha iniciado sesión","Bienvenido {$_SESSION['user']}", "success", "../");
@@ -28,6 +29,7 @@ function signin() {
 function logout() {
     session_start();
     $_SESSION = [];
+    session_unset();
 
     if (session_destroy()) {
         if ($_POST['count'] > 3)

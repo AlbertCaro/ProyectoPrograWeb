@@ -30,7 +30,7 @@ RewriteRule ^album/controller/(\d+)*$ controllers/AlbumController.php
 RewriteRule ^artist/controller/(\d+)*$ controllers/ArtistController.php
 RewriteRule ^author/controller/(\d+)*$ controllers/AuthorController.php
 RewriteRule ^song/controller/(\d+)*$ controllers/SongController.php
-RewriteRule ^song/favorites/controller/(\d+)*$ controllers/FavoriteController.php
+RewriteRule ^favorites/controller/(\d+)*$ controllers/FavoriteController.php
 RewriteRule ^label/controller/(\d+)*$ controllers/LabelController.php
 RewriteRule ^genre/controller/(\d+)*$ controllers/GenreController.php
 RewriteRule ^user/controller/(\d+)*$ controllers/UserController.php

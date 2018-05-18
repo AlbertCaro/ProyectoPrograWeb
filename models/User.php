@@ -44,7 +44,7 @@ class User
                 nombre = '{$this->nombre}',
                 apaterno = '{$this->apaterno}',
                 amaterno = '{$this->amaterno}'";
-        if ($this->pass !== "")
+        if ($this->pass !== md5(""))
             $sql .= ", pass = '{$this->pass}'";
         $sql .= " WHERE usuario = '{$this->usuario}'";
 

@@ -111,3 +111,83 @@ function emptyForm() {
         '<span>Ha dejado campos vacíos</span>\n' +
         '</div>');
 }
+
+function setFavorite(id, event) {
+    event.preventDefault();
+    $.ajax({
+        data: {
+            'fav' : id,
+            'func' : 'setFavorite'
+        },
+        type: 'post',
+        url: 'controller/',
+        success: function (response) {
+            if (response === 'setted') {
+                document.getElementById("link_"+id)
+                    .setAttribute('onclick', 'unsetFavorite('+id+', event)');
+                document.getElementById("image_fav_"+id)
+                    .setAttribute('src', '../assets/img/favorite_checked.png');
+                swal('Se ha añadido a favoritos', 'Se agregó la canción a favoritos', 'success');
+            } else {
+                swal('Error', 'No se ha podido realizar la acción', 'success');
+            }
+        }
+    });
+}
+
+function unsetFavorite(id, event) {
+    $.ajax({
+        data: {
+            'fav' : id,
+            'func' : 'unsetFavorite'
+        },
+        type: 'post',
+        url: 'controller/',
+        success: function (response) {
+            if (response === "unsetted") {
+                document.getElementById("link_"+id)
+                    .setAttribute('onclick', 'setFavorite('+id+', event)');
+                document.getElementById("image_fav_"+id)
+                    .setAttribute('src', '../assets/img/favorite.png');
+                generateTable();
+                swal('Se ha eliminado a favoritos', 'Se eliminó la canción de favoritos', 'success');
+            } else {
+                swal('Error', 'No se ha podido realizar la acción', 'success');
+            }
+        }
+    });
+}
+
+var id = 1;
+
+function createInput() {
+    var data = [];
+    var authors = document.getElementsByName("autores[]");
+    for (var i = 0; i < authors.length; i++) {
+        data.push(authors[i].value);
+    }
+
+    $.ajax({
+        data: {
+            'div_id' : id,
+            'default' : false,
+            'func' : 'autorInput'
+        },
+        type: 'post',
+        url: 'controller/',
+        success: function (response) {
+            document.getElementById('authors-change').setAttribute('value', 'true');
+            id++;
+            document.getElementById("authors").innerHTML += response;
+            for (var i = 0; i < authors.length-1; i++) {
+                authors[i].value = data[i];
+            }
+        }
+    });
+}
+
+function destroyInput(id) {
+    $("#autor_"+id).remove();
+    $("#close_"+id).remove();
+    document.getElementById('authors-change').setAttribute('value', 'true');
+}
