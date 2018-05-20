@@ -51,11 +51,30 @@ include_once "../layout/navbar.php";
                         <input type="text" name="amaterno" id="amaterno" value="<?php if ($_GET['id'] !== "") echo $rows['amaterno'] ?>"
                                placeholder="Apellido materno"/>
                     </div>
-                    <div class="6u 12u$(xsmall)">
+                    <div class="4u 12u$(xsmall)">
+                        <label for='tipo' style="color: #1C1C1C">Tipo de usuario:</label>
+                        <select id="tipo" name="tipo" required>
+                            <option value="">- Seleccione una opción -</option>
+                            <?php
+                            $types = [['Normal', 'normal'], ['Administrador', 'admin']];
+
+                            for ($i = 0; $i < count($types); $i++) {
+                                echo "<option value='{$types[$i][1]}'";
+                                if ($_GET['id'] !== '') {
+                                    if ($types[$i][1] == $rows['rol'])
+                                        echo " selected";
+                                }
+                                echo ">{$types[$i][0]}</option>";
+                            }
+
+                            ?>
+                        </select>
+                    </div>
+                    <div class="4u 12u$(xsmall)">
                         <label for='pass' style="color: #1C1C1C">Contraseña:</label>
                         <input type="password" name="pass" id="pass" placeholder="Contraseña" <?php if ($_GET['id'] === "") echo 'required' ?> />
                     </div>
-                    <div class="6u$ 12u$(xsmall)">
+                    <div class="4u$ 12u$(xsmall)">
                         <label for='pass_conf' style="color: #1C1C1C">Confirmar contraseña:</label>
                         <input type="password" name="pass_conf" id="pass_conf" placeholder="Confirmar contraseña" <?php if ($_GET['id'] === "") echo 'required' ?> />
                     </div>
@@ -99,7 +118,8 @@ include_once "../layout/navbar.php";
                 minlength: "La contraseña debe tener mínimo 5 carácteres",
                 <?php if ($_GET['id'] === "") echo ' required: "Debe confirmar la contraseña",' ?>
                 equalsTo: "Las contraseñas no coinciden"
-            }
+            },
+            tipo : "Debe seleccionar un tipo."
         }, submitHandler: function () {
             sendData({
                 "user" : $("#user").val(),
@@ -108,6 +128,7 @@ include_once "../layout/navbar.php";
                 "amaterno" : $('#amaterno').val(),
                 "pass" : $('#pass').val(),
                 "pass_conf" : $('#pass_conf').val(),
+                "rol" : $('#tipo').val(),
                 "func" : '<?php if ($_GET['id'] !== "") echo "update"; else echo "save"?>'
             }, 'controller/');
         }, invalidHandler: function () {

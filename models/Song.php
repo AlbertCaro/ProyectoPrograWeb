@@ -72,13 +72,15 @@ class Song
     }
 
     public static function getAuthors($id, $text) {
-        $sql = "SELECT a.idautores, CONCAT(a.nombre,' ',a.apaterno,' ',a.amaterno) as nombre FROM canciones_autores 
+        $sql = "SELECT a.idautores, CONCAT(a.nombre,' ',a.apaterno) as nombre, a.amaterno FROM canciones_autores 
                 INNER JOIN autores a on canciones_autores.idautores = a.idautores WHERE idcanciones = $id";
         $authors = Connection::get()->query($sql)->fetchAll();
         if ($text) {
             $res = "";
             for ($i = 0; $i < count($authors); $i++) {
                 $res .= $authors[$i]['nombre'];
+                if ($authors[$i]['amaterno'] !== "")
+                    $res .= ' ' . $authors[$i]['amaterno'];
                 if ($i+1 != count($authors))
                     $res.=", ";
             }

@@ -62,5 +62,5 @@ function delete() {
 }
 
 function createUser() {
-    return new User($_POST['user'], $_POST['nombre'], $_POST['apaterno'], $_POST['amaterno'], $_POST['pass'], 'normal');
+    return new User($_POST['user'], $_POST['nombre'], $_POST['apaterno'], $_POST['amaterno'], $_POST['pass'], $_POST['rol']);
 }

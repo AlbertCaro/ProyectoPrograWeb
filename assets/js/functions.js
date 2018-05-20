@@ -136,6 +136,7 @@ function setFavorite(id, event) {
 }
 
 function unsetFavorite(id, event) {
+    event.preventDefault();
     $.ajax({
         data: {
             'fav' : id,

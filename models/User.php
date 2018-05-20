@@ -35,7 +35,7 @@ class User
 
     public function save() {
         $sql = "INSERT INTO usuarios (usuario, pass, nombre, apaterno, amaterno, rol)
-               VALUES ('{$this->usuario}', '{$this->pass}', '{$this->nombre}', '{$this->apaterno}', '{$this->amaterno}', 'normal')";
+               VALUES ('{$this->usuario}', '{$this->pass}', '{$this->nombre}', '{$this->apaterno}', '{$this->amaterno}', '{$this->rol}')";
         return Connection::get() -> exec($sql);
     }
 
@@ -43,11 +43,11 @@ class User
         $sql = "UPDATE usuarios SET
                 nombre = '{$this->nombre}',
                 apaterno = '{$this->apaterno}',
-                amaterno = '{$this->amaterno}'";
+                amaterno = '{$this->amaterno}',
+                rol = '{$this->rol}'";
         if ($this->pass !== md5(""))
             $sql .= ", pass = '{$this->pass}'";
         $sql .= " WHERE usuario = '{$this->usuario}'";
-
         return Connection::get() -> exec($sql);
     }
 
@@ -62,12 +62,12 @@ class User
 
     public static function delete($id) {
         $sql = "DELETE FROM usuarios WHERE idusuarios = {$id}";
-        echo Connection::get() -> exec($sql);
+        return Connection::get() -> exec($sql);
     }
 
     public static function get($id) {
         $sql = "SELECT * FROM usuarios WHERE idusuarios = {$id}";
-        return (Connection::get() -> query($sql)) -> fetchAll()[0];
+        return Connection::get() -> query($sql) -> fetchAll()[0];
     }
 
     public static function search($search) {
